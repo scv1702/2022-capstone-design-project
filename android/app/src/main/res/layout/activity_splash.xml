@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    >
+
+    <TextView
+        android:id="@+id/id_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="230dp"
+        android:text="Document helper"
+        android:fontFamily="@font/bmhannapro"
+        android:textColor="@color/white"
+        android:textSize="40dp" />
+
+    <!--
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/id_title_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo" />
+    !-->
+
+    <RelativeLayout
+        android:id="@+id/main_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp">
+
+        <RelativeLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progressbackground" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="660dp"
+        android:layout_marginLeft="163dp"
+        android:fontFamily="@font/bmhannapro"
+        android:text="Loading"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+</RelativeLayout>
