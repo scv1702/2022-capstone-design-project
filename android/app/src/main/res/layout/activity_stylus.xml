@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="660dp">
+        <com.theartofdev.edmodo.cropper.CropImageView
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cropImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/ImageUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType = "fitXY"
+            />
+        <com.example.capstoneandroid.PaintView
+            android:id="@+id/paintVIEW1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </com.example.capstoneandroid.PaintView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardView">
+
+        <LinearLayout
+            android:id="@+id/nav_division"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/little_white"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/SCbutton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nav_division"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop= "5dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:text="ScreenShot"
+            android:fontFamily="@font/bmhannapro"/>
+
+        <Button
+            android:id="@+id/resetPen"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/nav_division"
+            android:layout_marginLeft="360dp"
+            android:layout_marginTop= "15dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/icon_reset"
+            />
+        <Button
+            android:id="@+id/MouseCapture"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="0dp"
+            />
+    </RelativeLayout>
+</RelativeLayout>
