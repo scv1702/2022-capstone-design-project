@@ -14,15 +14,11 @@ import android.provider.MediaStore
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.capstoneandroid.PaintView.Companion.colorList
 import com.example.capstoneandroid.PaintView.Companion.pathList
-import com.example.capstoneandroid.R
 import com.example.capstoneandroid.databinding.ActivityStylusBinding
 import com.google.android.material.card.MaterialCardView
 import com.theartofdev.edmodo.cropper.CropImage
@@ -30,10 +26,11 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.lang.reflect.Field
 
 
 @Suppress("DEPRECATION")
-class stylusActivity : AppCompatActivity() {
+class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     private val binding by lazy { ActivityStylusBinding.inflate(layoutInflater) }
 
     companion object{
@@ -54,7 +51,10 @@ class stylusActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        // Open the album
+        // POPUP
+        binding.popupID.setOnClickListener { showPopup(binding.popupID) }
+
+    // Open the album
         var photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
@@ -64,11 +64,11 @@ class stylusActivity : AppCompatActivity() {
         val resetButton = findViewById<Button>(R.id.resetPen)
 
         var currentAction= ""
-        detector = GestureDetector(this,object : GestureDetector.SimpleOnGestureListener() {
+        detector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             //화면을 손가락으로 오랫동안 눌렀을 경우
             override fun onLongPress(e: MotionEvent) {
-                xValue= e.getX().toInt()
-                yValue= e.getY().toInt()
+                xValue = e.getX().toInt()
+                yValue = e.getY().toInt()
                 currentAction = "isLongPressed"
                 super.onLongPress(e)
             }
@@ -91,13 +91,13 @@ class stylusActivity : AppCompatActivity() {
 
         val cardView= findViewById<MaterialCardView>(R.id.cardView)
 
-        val gestureListener = View.OnTouchListener(function = { view,event ->
+        val gestureListener = View.OnTouchListener(function = { view, event ->
             detector!!.onTouchEvent(event)
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 when (currentAction) {
                     "isLongPressed" -> {
                         MouseCaptureButton.performClick()
-                        currentAction=""
+                        currentAction = ""
                     }
                 }
             }
@@ -116,7 +116,7 @@ class stylusActivity : AppCompatActivity() {
         // 마우스 왼쪽 클릭 시 강제 버튼이벤트를 발생시키기 위함.
         MouseCaptureButton.setOnClickListener {
             val bitmap = getScreenShotFromView(cardView)
-            URII = getImageUriFromBitmap(this,bitmap!!)
+            URII = getImageUriFromBitmap(this, bitmap!!)
 
             // start cropping activity for pre-acquired image saved on the device
             CropImage.activity(URII)
@@ -131,24 +131,26 @@ class stylusActivity : AppCompatActivity() {
         }
     }
     // Cropper Activity execute GoGO!!
-    override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
-        super.onActivityResult(requestCode,resultCode,data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
                 var bitmap: Bitmap? = null
                 try {
-                    bitmap=MediaStore.Images.Media.getBitmap(this.getContentResolver(),Uri.parse(
-                        resultUri.toString()
-                    ))
+                    bitmap=MediaStore.Images.Media.getBitmap(
+                        this.getContentResolver(), Uri.parse(
+                            resultUri.toString()
+                        )
+                    )
                 } catch (e: java.lang.Exception) {
                     //handle exception
                 }
                 if (bitmap != null) {
                     saveMediaToStorage(bitmap)
                 }
-                Toast.makeText(this,"Captured View and saved to Gallery",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT).show()
 
                 // 필기체 초기화
                 pathList.clear()
@@ -163,11 +165,11 @@ class stylusActivity : AppCompatActivity() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 layoutParams.gravity = Gravity.CENTER;
-                layoutParams.setMargins(xValue+30, yValue+30,0,0)
+                layoutParams.setMargins(xValue + 30, yValue + 30, 0, 0)
                 texts1.setLayoutParams(layoutParams)
                 texts1.setText("변환된 Text")
                 texts1.setTextColor(Color.BLACK)
-                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP,26F)
+                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26F)
                 Mainlayout.addView(texts1)
 
                 // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
@@ -188,12 +190,17 @@ class stylusActivity : AppCompatActivity() {
         }
     }
 
-    fun getImageUriFromBitmap(context: Context,bitmap: Bitmap): Uri{
+    fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri{
         val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         // URI을 Bitmap으로 바꾸기위해 mediastore에 "Title"이라는 name의 image로 저장해놓지만
         // 후에 이 image를 삭제함.
-        val path = MediaStore.Images.Media.insertImage(context.contentResolver,bitmap,"Title",null)
+        val path = MediaStore.Images.Media.insertImage(
+            context.contentResolver,
+            bitmap,
+            "Title",
+            null
+        )
         return Uri.parse(path.toString())
     }
 
@@ -215,7 +222,7 @@ class stylusActivity : AppCompatActivity() {
             val canvas = Canvas(screenshot)
             v.draw(canvas)
         } catch (e: Exception) {
-            Log.e("GFG","Failed to capture screenshot because:" + e.message)
+            Log.e("GFG", "Failed to capture screenshot because:" + e.message)
         }
         // return the bitmap
         return screenshot
@@ -239,9 +246,9 @@ class stylusActivity : AppCompatActivity() {
                 val contentValues = ContentValues().apply {
 
                     // putting file information in content values
-                    put(MediaStore.MediaColumns.DISPLAY_NAME,filename)
-                    put(MediaStore.MediaColumns.MIME_TYPE,"image/jpg")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH,Environment.DIRECTORY_PICTURES)
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
 
                 // Inserting the contentValues to
@@ -257,16 +264,51 @@ class stylusActivity : AppCompatActivity() {
         } else {
             // These for devices running on android < Q
             val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-            val image = File(imagesDir,filename)
+            val image = File(imagesDir, filename)
             fos = FileOutputStream(image)
         }
 
         fos?.use {
             // Finally writing the bitmap to the output stream that we opened
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,it)
-            Toast.makeText(this,"Captured View and saved to Gallery",Toast.LENGTH_SHORT).show()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+            Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT).show()
         }
     }
     //////////////////////////////SCREENSHOT CODE END///////////////////////
+
+    private fun showPopup(v: View) {
+        val ctw = ContextThemeWrapper(this, R.style.MyPopupMenu);
+        val popup = PopupMenu(ctw, v) // PopupMenu 객체 선언
+        popup.menuInflater.inflate(R.menu.popup, popup.menu) // 메뉴 레이아웃 inflate
+        popup.setOnMenuItemClickListener(this) // 메뉴 아이템 클릭 리스너 달아주기
+        // Force icons to show
+        val menuHelper: Any
+        val argTypes: Array<Class<*>?>
+        try {
+            val fMenuHelper: Field = PopupMenu::class.java.getDeclaredField("mPopup")
+            fMenuHelper.setAccessible(true)
+            menuHelper = fMenuHelper.get(popup)
+            argTypes = arrayOf(Boolean::class.javaPrimitiveType)
+            menuHelper.javaClass.getDeclaredMethod("setForceShowIcon", *argTypes)
+                .invoke(menuHelper, true)
+        } catch (e: java.lang.Exception) {
+            // Possible exceptions are NoSuchMethodError and NoSuchFieldError
+            popup.show()
+            return
+        }
+        popup.show() // 팝업 보여주기
+
+    }
+
+    // 팝업 메뉴 아이템 클릭 시 실행되는 메소드
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
+            R.id.captureBitmap -> {
+                Toast.makeText(this, "CaptureBitmap!!", Toast.LENGTH_LONG).show()
+            }
+            R.id.capturePDF -> Toast.makeText(this, "CapturePDF!!!!", Toast.LENGTH_LONG).show()
+        }
+        return item != null // 아이템이 null이 아닌 경우 true, null인 경우 false 리턴
+    }
 
 }
