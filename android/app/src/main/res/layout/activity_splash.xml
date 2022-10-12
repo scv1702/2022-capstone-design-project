@@ -11,12 +11,12 @@
         android:id="@+id/id_title_layout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginLeft="66dp"
+        android:layout_marginTop="269dp"
         android:text="Document helper"
-        android:fontFamily="@font/bmhannapro"
+        android:fontFamily="@font/opensanssemibold"
         android:textColor="@color/white"
-        android:textSize="33dp" />
+        android:textSize="32dp" />
 
     <!--
     <ImageView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="300dp">
+        android:layout_marginBottom="310dp">
 
         <RelativeLayout
             android:id="@+id/loading_layout"
@@ -42,14 +42,14 @@
             android:layout_height="wrap_content">
 
             <ProgressBar
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerInParent="true"
                 android:indeterminateDrawable="@drawable/progressbackground" />
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/circle" />
         </RelativeLayout>
@@ -58,8 +58,8 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginTop="430dp"
-        android:layout_marginLeft="170dp"
+        android:layout_marginTop="420dp"
+        android:layout_marginLeft="171dp"
         android:fontFamily="@font/bmhannapro"
         android:text="Loading"
         android:textColor="@color/white"
