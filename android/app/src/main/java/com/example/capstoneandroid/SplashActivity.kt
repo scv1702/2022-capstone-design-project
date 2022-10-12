@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
         super.onResume()
         val handler = Handler()
         handler.postDelayed({
-            val intent = Intent(this@SplashActivity, stylusActivity::class.java)
+            val intent = Intent(this@SplashActivity, selectDocsActivity::class.java)
             startActivity(intent)
         }, 3000)
     }

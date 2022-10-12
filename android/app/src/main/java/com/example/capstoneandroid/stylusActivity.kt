@@ -1,5 +1,6 @@
 package com.example.capstoneandroid
 
+import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
@@ -54,10 +55,14 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         // POPUP
         binding.popupID.setOnClickListener { showPopup(binding.popupID) }
 
-    // Open the album
-        var photoPickerIntent = Intent(Intent.ACTION_PICK)
-        photoPickerIntent.type = "image/*"
-        startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+        val secondIntent = intent
+        val checkstylus= secondIntent.getIntExtra("번호", 0)
+        if (checkstylus==8){ // Addfileon // 8이 아니라면, 빈 문서를 선택한 것(newCreate)이므로 첫 시작에 앨범 열 필요 X
+            // Open the album
+            var photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+        }
 
         val captureButton = findViewById<Button>(R.id.SCbutton)
         val MouseCaptureButton = findViewById<Button>(R.id.MouseCapture)
@@ -165,11 +170,17 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 layoutParams.gravity = Gravity.CENTER;
-                layoutParams.setMargins(xValue + 30, yValue + 30, 0, 0)
+                layoutParams.setMargins(xValue + 25, yValue + 25, 0, 0)
                 texts1.setLayoutParams(layoutParams)
                 texts1.setText("변환된 Text")
                 texts1.setTextColor(Color.BLACK)
                 texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26F)
+                val typeface = Typeface.createFromAsset(
+                    assets,
+                    "asfont/opensanslight.otf"
+                ) // font 폴더내에 있는 opensanslight.otf 파일을 typeface로 설정
+                texts1.typeface = typeface // texts1는 TextView 변수
+
                 Mainlayout.addView(texts1)
 
                 // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
