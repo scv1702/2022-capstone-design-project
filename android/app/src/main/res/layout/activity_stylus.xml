@@ -27,7 +27,8 @@
             android:id="@+id/ImageUpdate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType = "fitXY"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             />
         <com.example.capstoneandroid.PaintView
             android:id="@+id/paintVIEW1"
@@ -40,11 +41,13 @@
 
     <Button
         android:id="@+id/popupID"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginLeft="350dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/telegram"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         >
 
     </Button>
@@ -60,12 +63,16 @@
 
     <Button
         android:id="@+id/resetPen"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginLeft="304dp"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/eraser" />
+        android:background="@drawable/eraser"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+
     <Button
         android:id="@+id/MouseCapture"
         android:layout_width="match_parent"

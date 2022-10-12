@@ -10,13 +10,14 @@
     <TextView
         android:id="@+id/id_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="66dp"
-        android:layout_marginTop="269dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="290dp"
+        android:gravity="center"
         android:text="Document helper"
         android:fontFamily="@font/opensanssemibold"
         android:textColor="@color/white"
-        android:textSize="32dp" />
+        android:textSize="29dp" />
 
     <!--
     <ImageView
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="310dp">
+        android:layout_marginBottom="320dp">
 
         <RelativeLayout
             android:id="@+id/loading_layout"
@@ -42,28 +43,29 @@
             android:layout_height="wrap_content">
 
             <ProgressBar
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="true"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_centerHorizontal="true"
                 android:indeterminateDrawable="@drawable/progressbackground" />
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/circle" />
         </RelativeLayout>
     </RelativeLayout>
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="420dp"
-        android:layout_marginLeft="171dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginTop="412dp"
         android:fontFamily="@font/bmhannapro"
         android:text="Loading"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="10dp"
         />
 
 </RelativeLayout>
