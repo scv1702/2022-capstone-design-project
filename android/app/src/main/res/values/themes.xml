@@ -20,4 +20,15 @@
         <item name="fontFamily">@font/opensansregular</item>
     </style>
 
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/opensanssemibold</item>
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/opensansregular</item>
+    </style>
+
+
 </resources>

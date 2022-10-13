@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/blackcolor"
+        android:title="검정"
+    />
+
+    <item android:id="@+id/redcolor"
+        android:title="빨강"
+    />
+
+    <item android:id="@+id/bluecolor"
+        android:title="파랑"
+    />
+
+</menu>
