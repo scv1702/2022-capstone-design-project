@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     >
-    <RelativeLayout
+
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white">
-    </RelativeLayout>
+        android:layout_height="41dp"
+        android:background="@color/white"></androidx.appcompat.widget.Toolbar>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="600dp"
@@ -39,19 +40,6 @@
     </com.google.android.material.card.MaterialCardView>
 
 
-    <Button
-        android:id="@+id/popupID"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:layout_marginLeft="350dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/telegram"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        >
-
-    </Button>
-
 
     <Button
         android:id="@+id/SCbutton"
@@ -60,14 +48,50 @@
         android:gravity="center"
         android:text="ScreenShot"
         />
+    <!-- button color #30C4FF
+    !-->
+
+    <Button
+        android:id="@+id/popupID"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/export"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
+    <Button
+        android:id="@+id/setting"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="354dp"
+        android:layout_marginTop="8.5dp"
+        android:background="@drawable/setting"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
+    <Button
+        android:id="@+id/penColor"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/pen"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        >
+    </Button>
 
     <Button
         android:id="@+id/resetPen"
         android:layout_width="27dp"
         android:layout_height="27dp"
-        android:layout_marginLeft="304dp"
+        android:layout_marginLeft="266dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/eraser"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"/>

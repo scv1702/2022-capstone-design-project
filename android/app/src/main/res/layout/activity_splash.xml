@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/backgroundColor"
     >
 
     <TextView
@@ -45,16 +45,16 @@
             android:layout_height="wrap_content">
 
             <ProgressBar
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
                 android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:indeterminateDrawable="@drawable/progressbackground" />
 
             <ImageView
-                android:layout_width="31dp"
-                android:layout_height="31dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerInParent="true"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
@@ -69,11 +69,11 @@
         android:gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:layout_marginTop="417dp"
+        android:layout_marginTop="419dp"
         android:fontFamily="@font/bmhannapro"
         android:text="Loading"
         android:textColor="@color/white"
-        android:textSize="12dp"
+        android:textSize="15dp"
         />
 
 </RelativeLayout>

@@ -24,6 +24,13 @@
     <color name="lineColor">#7d8090</color>
     <color name="blueTextCoor">#3fb7d9</color>
     <color name="whiteTextCoor">#FFF</color>
-    <color name="little_white">#E0E0E0</color>
+    <color name="little_white">#F9F9F9</color>
+    <color name="naviTextColor">#6E6E6E</color>
+    <color name="light_blue">#DEEAEF</color>
+    <color name="backgroundColor">#FF9494</color>
+    <!--
+    <color name="backgroundColor">#FF8B8B</color>
+    !-->
+    <color name="mainpencolor">#FD5E5E</color>
 
 </resources>

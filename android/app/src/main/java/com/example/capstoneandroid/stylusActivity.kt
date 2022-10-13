@@ -19,6 +19,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.capstoneandroid.PaintView.Companion.colorList
+import com.example.capstoneandroid.PaintView.Companion.currentBrush
 import com.example.capstoneandroid.PaintView.Companion.pathList
 import com.example.capstoneandroid.databinding.ActivityStylusBinding
 import com.google.android.material.card.MaterialCardView
@@ -54,6 +55,8 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
         // POPUP
         binding.popupID.setOnClickListener { showPopup(binding.popupID) }
+        // PEN_POPUP
+        binding.penColor.setOnClickListener { showPopupColor(binding.penColor) }
 
         val secondIntent = intent
         val checkstylus= secondIntent.getIntExtra("번호", 0)
@@ -293,11 +296,11 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         popup.menuInflater.inflate(R.menu.popup, popup.menu) // 메뉴 레이아웃 inflate
         popup.setOnMenuItemClickListener(this) // 메뉴 아이템 클릭 리스너 달아주기
         // Force icons to show
-        val menuHelper: Any
+        val menuHelper: Any?
         val argTypes: Array<Class<*>?>
         try {
             val fMenuHelper: Field = PopupMenu::class.java.getDeclaredField("mPopup")
-            fMenuHelper.setAccessible(true)
+            fMenuHelper.isAccessible = true
             menuHelper = fMenuHelper.get(popup)
             argTypes = arrayOf(Boolean::class.javaPrimitiveType)
             menuHelper.javaClass.getDeclaredMethod("setForceShowIcon", *argTypes)
@@ -308,7 +311,29 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             return
         }
         popup.show() // 팝업 보여주기
+    }
 
+    private fun showPopupColor(v: View) {
+        val ctw = ContextThemeWrapper(this, R.style.MyPopupMenu);
+        val popupColor = PopupMenu(ctw, v) // PopupMenu 객체 선언
+        popupColor.menuInflater.inflate(R.menu.penpopup, popupColor.menu) // 메뉴 레이아웃 inflate
+        popupColor.setOnMenuItemClickListener(this) // 메뉴 아이템 클릭 리스너 달아주기
+        // Force icons to show
+        val menuHelper: Any?
+        val argTypes: Array<Class<*>?>
+        try {
+            val fMenuHelper1: Field = PopupMenu::class.java.getDeclaredField("mPopup")
+            fMenuHelper1.isAccessible = true
+            menuHelper = fMenuHelper1.get(popupColor)
+            argTypes = arrayOf(Boolean::class.javaPrimitiveType)
+            menuHelper.javaClass.getDeclaredMethod("setForceShowIcon", *argTypes)
+                .invoke(menuHelper, true)
+        } catch (e: java.lang.Exception) {
+            // Possible exceptions are NoSuchMethodError and NoSuchFieldError
+            popupColor.show()
+            return
+        }
+        popupColor.show() // 팝업 보여주기
     }
 
     // 팝업 메뉴 아이템 클릭 시 실행되는 메소드
@@ -317,9 +342,34 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             R.id.captureBitmap -> {
                 Toast.makeText(this, "CaptureBitmap!!", Toast.LENGTH_LONG).show()
             }
-            R.id.capturePDF -> Toast.makeText(this, "CapturePDF!!!!", Toast.LENGTH_LONG).show()
+            R.id.capturePDF -> {
+                Toast.makeText(this, "CapturePDF!!!!", Toast.LENGTH_LONG).show()
+            }
+
+            R.id.bluecolor -> {
+                Toast.makeText(this, "Blue !", Toast.LENGTH_SHORT).show()
+                paintBrush.color = Color.BLUE
+                currentColor(paintBrush.color)
+            }
+            R.id.blackcolor -> {
+                Toast.makeText(this, "Black !", Toast.LENGTH_SHORT).show()
+                paintBrush.color = Color.BLACK
+                currentColor(paintBrush.color)
+            }
+            R.id.redcolor -> {
+                Toast.makeText(this, "Red !", Toast.LENGTH_SHORT).show()
+                paintBrush.color = Color.RED
+                currentColor(paintBrush.color)
+            }
         }
         return item != null // 아이템이 null이 아닌 경우 true, null인 경우 false 리턴
     }
+
+    private fun currentColor(color: Int){
+        currentBrush = color
+        path = Path()
+    }
+
+
 
 }
