@@ -3,6 +3,7 @@ package com.example.capstoneandroid
 import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -57,6 +58,8 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         binding.popupID.setOnClickListener { showPopup(binding.popupID) }
         // PEN_POPUP
         binding.penColor.setOnClickListener { showPopupColor(binding.penColor) }
+        // Setting_POPUP
+        binding.StylusSetting.setOnClickListener{ showAlertSetting(binding.StylusSetting)}
 
         val secondIntent = intent
         val checkstylus= secondIntent.getIntExtra("번호", 0)
@@ -70,6 +73,9 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         val captureButton = findViewById<Button>(R.id.SCbutton)
         val MouseCaptureButton = findViewById<Button>(R.id.MouseCapture)
         val resetButton = findViewById<Button>(R.id.resetPen)
+
+        val builder = AlertDialog.Builder(this)
+        val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
 
         var currentAction= ""
         detector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
@@ -335,6 +341,22 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         }
         popupColor.show() // 팝업 보여주기
     }
+    private fun showAlertSetting(v: View){
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.alertdialog, null)
+        val dialogText = dialogView.findViewById<EditText>(R.id.dialogEt)
+
+        builder.setView(dialogView)
+            .setPositiveButton("확인") { dialogInterface, i ->
+                Toast.makeText(this, "${dialogText.text.toString()}"+"dp", Toast.LENGTH_LONG).show()
+                /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
+
+            }
+            .setNegativeButton("취소") { dialogInterface, i ->
+                /* 취소일 때 아무 액션이 없으므로 빈칸 */
+            }
+            .show()
+    }
 
     // 팝업 메뉴 아이템 클릭 시 실행되는 메소드
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -369,7 +391,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         currentBrush = color
         path = Path()
     }
-
 
 
 }
