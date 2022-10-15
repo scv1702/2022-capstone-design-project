@@ -76,7 +76,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         val resetButton = findViewById<Button>(R.id.resetPen)
         val pdfButton = findViewById<Button>(R.id.capturePDF)
 
-        val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
+        // val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
 
         var currentAction= ""
         detector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
