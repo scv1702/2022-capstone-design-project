@@ -76,7 +76,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         val resetButton = findViewById<Button>(R.id.resetPen)
         val pdfButton = findViewById<Button>(R.id.capturePDF)
 
-        val builder = AlertDialog.Builder(this)
         val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
 
         var currentAction= ""
@@ -250,7 +249,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         // return the bitmap
         return screenshot
     }
-
 
     // this method saves the image to gallery
     private fun saveMediaToStorage(bitmap: Bitmap) {
