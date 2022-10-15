@@ -48,6 +48,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     var URII : Uri? = null
     var PICK_IMAGE_FROM_ALBUM = 0
     var PICK_IMAGE_FROM_ALBUM_Vaild = 0
+    var transTextSize= 26
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -185,7 +186,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 texts1.setLayoutParams(layoutParams)
                 texts1.setText("변환된 Text")
                 texts1.setTextColor(Color.BLACK)
-                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26F)
+                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, transTextSize.toFloat())
                 val typeface = Typeface.createFromAsset(
                     assets,
                     "asfont/opensanslight.otf"
@@ -375,8 +376,9 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
-                Toast.makeText(this, "${dialogText.text.toString()}"+"dp", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${dialogText.text.toString()}"+"F", Toast.LENGTH_LONG).show()
                 /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
+                transTextSize= dialogText.text.toString().toInt()
 
             }
             .setNegativeButton("취소") { dialogInterface, i ->

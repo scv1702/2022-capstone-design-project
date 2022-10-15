@@ -26,6 +26,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:ems="9"
-        android:hint="dp단위로 입력해주세요."
+        android:hint="기본: 26F"
         android:inputType="textPersonName" />
 </LinearLayout>
