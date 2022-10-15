@@ -19,7 +19,6 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         <activity android:name=".selectDocsActivity"></activity>
-        <activity android:name=".NewStylusActivity" />
         <activity android:name=".stylusActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashActivity">
