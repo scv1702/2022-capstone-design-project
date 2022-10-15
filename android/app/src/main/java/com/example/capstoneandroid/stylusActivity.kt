@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -73,6 +74,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         val captureButton = findViewById<Button>(R.id.SCbutton)
         val MouseCaptureButton = findViewById<Button>(R.id.MouseCapture)
         val resetButton = findViewById<Button>(R.id.resetPen)
+        val pdfButton = findViewById<Button>(R.id.capturePDF)
 
         val builder = AlertDialog.Builder(this)
         val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
@@ -143,6 +145,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             colorList.clear()
             path.reset()
         }
+
     }
     // Cropper Activity execute GoGO!!
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -296,6 +299,32 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     }
     //////////////////////////////SCREENSHOT CODE END///////////////////////
 
+    private fun savePDFToStorage() {
+        val filename = "resume_${System.currentTimeMillis()}.pdf"
+        val cardView= findViewById<MaterialCardView>(R.id.cardView)
+        val bitmap = getScreenShotFromView(cardView)
+
+        if (bitmap != null) {
+            val pdfDocument = PdfDocument();
+            val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, 1).create()
+            val page = pdfDocument.startPage(pageInfo)
+            val canvas = page.canvas
+            val paint = Paint()
+
+            canvas.drawBitmap(bitmap, 0F, 0F, paint)
+
+            pdfDocument.finishPage(page)
+
+            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename)
+
+            try {
+                pdfDocument.writeTo(FileOutputStream(file))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun showPopup(v: View) {
         val ctw = ContextThemeWrapper(this, R.style.MyPopupMenu);
         val popup = PopupMenu(ctw, v) // PopupMenu 객체 선언
@@ -366,6 +395,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             }
             R.id.capturePDF -> {
                 Toast.makeText(this, "CapturePDF!!!!", Toast.LENGTH_LONG).show()
+                savePDFToStorage()
             }
 
             R.id.bluecolor -> {
