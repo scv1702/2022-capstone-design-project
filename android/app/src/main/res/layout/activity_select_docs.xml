@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="6dp"
             android:layout_marginLeft="12dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:text="무슨 문서를 찾으세요?" />
@@ -86,7 +86,7 @@
         android:layout_height="80dp"
         android:layout_marginLeft="245dp"
         android:layout_marginTop="255dp"
-        android:background="@drawable/folder_thin"
+        android:background="@drawable/newfolder"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"/>
 
