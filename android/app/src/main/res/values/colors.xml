@@ -33,4 +33,6 @@
     !-->
     <color name="mainpencolor">#FD5E5E</color>
     <color name="secondpencolor">#FF9494</color>
+    <color name="grayPenColor">#616161</color>
+
 </resources>
