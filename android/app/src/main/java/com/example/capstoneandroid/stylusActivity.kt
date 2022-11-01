@@ -298,6 +298,14 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     }
     //////////////////////////////SCREENSHOT CODE END///////////////////////
 
+    private fun savePNGToStorage() {
+        val cardView = findViewById<MaterialCardView>(R.id.cardView)
+        val bitmap = getScreenShotFromView(cardView)
+        if (bitmap != null) {
+            saveMediaToStorage(bitmap)
+        }
+    }
+
     private fun savePDFToStorage() {
         val filename = "resume_${System.currentTimeMillis()}.pdf"
         val cardView= findViewById<MaterialCardView>(R.id.cardView)
@@ -392,6 +400,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         when (item?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
             R.id.captureBitmap -> {
                 Toast.makeText(this, "CaptureBitmap!!", Toast.LENGTH_LONG).show()
+                savePNGToStorage()
             }
             R.id.capturePDF -> {
                 Toast.makeText(this, "CapturePDF!!!!", Toast.LENGTH_LONG).show()
@@ -399,17 +408,14 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             }
 
             R.id.bluecolor -> {
-                Toast.makeText(this, "Blue !", Toast.LENGTH_SHORT).show()
                 paintBrush.color = Color.BLUE
                 currentColor(paintBrush.color)
             }
             R.id.blackcolor -> {
-                Toast.makeText(this, "Black !", Toast.LENGTH_SHORT).show()
                 paintBrush.color = Color.BLACK
                 currentColor(paintBrush.color)
             }
             R.id.redcolor -> {
-                Toast.makeText(this, "Red !", Toast.LENGTH_SHORT).show()
                 paintBrush.color = Color.RED
                 currentColor(paintBrush.color)
             }

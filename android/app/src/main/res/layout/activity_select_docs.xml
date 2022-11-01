@@ -51,19 +51,66 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/ic_search" />
     </RelativeLayout>
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/advertisingBanner"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_marginTop="80dp"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="wrap_content">
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/advertisingBanner"
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/txt_current_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/gray_ellipse"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/advertisingBanner"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="1 / 3 모두보기" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/docuSelect"
+        android:layout_below="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문서 선택"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/naviTextColor"
+        android:fontFamily="@font/opensanssemibold"
+        android:textSize="15dp"/>
+    <View
+        android:layout_width="250dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/container"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/docuSelect"
+        android:background="@color/colorLightGray"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <ImageButton
         android:id="@+id/newCreate"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="450dp"
-        android:layout_marginLeft="40dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/docuSelect"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="50dp"
         android:background="@drawable/newfile_thin"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
@@ -74,23 +121,24 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:gravity="center"
-        android:layout_toRightOf="@id/newCreate"
-        android:layout_marginTop="460dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="49dp"
         android:text="빈 문서"
-        android:fontFamily="@font/opensansregular"
-        android:textColor="@color/secondpencolor"
-        android:textSize="20dp"
+        android:layout_below="@id/newCreate"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/grayPenColor"
+        android:textSize="13dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         />
 
     <ImageButton
         android:id="@+id/addfileon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="530dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="140dp"
+        android:layout_below="@+id/docuSelect"
         android:background="@drawable/newfolder"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"/>
@@ -100,16 +148,148 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:gravity="center"
-        android:layout_toRightOf="@id/addfileon"
-        android:layout_marginTop="540dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="140dp"
         android:text="불러오기"
-        android:fontFamily="@font/opensansregular"
-        android:textColor="@color/secondpencolor"
-        android:textSize="20dp"
+        android:layout_below="@id/addfileon"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/grayPenColor"
+        android:textSize="13dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         />
+
+    <TextView
+        android:id="@+id/famousDocu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="인기 문서"
+        android:layout_marginTop="520dp"
+        android:layout_marginLeft="28dp"
+        android:textColor="@color/naviTextColor"
+        android:fontFamily="@font/opensanssemibold"
+        android:textSize="15dp"/>
+    <View
+        android:layout_width="250dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="529dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/docuSelect"
+        android:background="@color/colorLightGray"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+    <ImageButton
+        android:id="@+id/buildingScore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/officebuilding"
+        android:layout_below="@id/famousDocu"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="300dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="297dp"
+        android:text="기업 보고서"
+        android:layout_below="@id/buildingScore"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/grayPenColor"
+        android:textSize="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
+    <ImageButton
+        android:id="@+id/meetingScore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="140dp"
+        android:layout_below="@+id/famousDocu"
+        android:background="@drawable/meeting"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="146dp"
+        android:text="회의록"
+        android:layout_below="@id/schoolScore"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/grayPenColor"
+        android:textSize="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
+
+    <ImageButton
+        android:id="@+id/schoolScore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="220dp"
+        android:layout_below="@+id/famousDocu"
+        android:background="@drawable/grade"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="217dp"
+        android:text="대학 레포트"
+        android:layout_below="@id/schoolScore"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/grayPenColor"
+        android:textSize="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
+    <ImageButton
+        android:id="@+id/resumeScore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@+id/famousDocu"
+        android:background="@drawable/resume"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="53dp"
+        android:text="이력서"
+        android:layout_below="@id/resumeScore"
+        android:fontFamily="@font/opensanssemibold"
+        android:textColor="@color/grayPenColor"
+        android:textSize="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
