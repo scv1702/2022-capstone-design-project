@@ -14,6 +14,7 @@
         android:background="@color/white"></androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.card.MaterialCardView
+        android:theme="@style/Theme.MaterialComponents.Light"
         android:id="@+id/cardView"
         android:layout_width="600dp"
         android:layout_below="@+id/toolbar"
@@ -38,7 +39,6 @@
             >
         </com.example.capstoneandroid.PaintView>
     </com.google.android.material.card.MaterialCardView>
-
 
 
     <Button

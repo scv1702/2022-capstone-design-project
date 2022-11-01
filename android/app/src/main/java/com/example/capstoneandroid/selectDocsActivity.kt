@@ -17,11 +17,11 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.example.capstoneandroid.PaintView.Companion.colorList
 import com.example.capstoneandroid.PaintView.Companion.pathList
 import com.example.capstoneandroid.databinding.ActivitySelectDocsBinding
 import com.google.android.material.card.MaterialCardView
-import com.theartofdev.edmodo.cropper.CropImage
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -39,6 +39,7 @@ class selectDocsActivity : AppCompatActivity() {
 
         val newCreate = findViewById<ImageButton>(R.id.newCreate)
         val addfileon = findViewById<ImageButton>(R.id.addfileon)
+
 
         newCreate.setOnClickListener {
             val intent = Intent(this@selectDocsActivity, stylusActivity::class.java)
