@@ -32,5 +32,5 @@
     <color name="backgroundColor">#FF8B8B</color>
     !-->
     <color name="mainpencolor">#FD5E5E</color>
-
+    <color name="secondpencolor">#FF9494</color>
 </resources>

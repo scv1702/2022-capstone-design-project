@@ -376,7 +376,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
-                Toast.makeText(this, "${dialogText.text.toString()}"+"F", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${dialogText.text.toString()}", Toast.LENGTH_LONG).show()
                 /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
                 transTextSize= dialogText.text.toString().toInt()
 

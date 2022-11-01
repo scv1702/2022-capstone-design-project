@@ -51,14 +51,20 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/ic_search" />
     </RelativeLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/advertisingBanner"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"/>
+
 
     <ImageButton
         android:id="@+id/newCreate"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="70dp"
-        android:background="@drawable/emptyfile_thin"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/newfile_thin"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         />
@@ -68,24 +74,23 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:gravity="center"
-        android:layout_below="@id/newCreate"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="82dp"
+        android:layout_toRightOf="@id/newCreate"
+        android:layout_marginTop="460dp"
+        android:layout_marginLeft="20dp"
         android:text="빈 문서"
-        android:fontFamily="@font/bmhannapro"
-        android:textColor="@color/black"
+        android:fontFamily="@font/opensansregular"
+        android:textColor="@color/secondpencolor"
         android:textSize="20dp"
-        android:textStyle="bold"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         />
 
     <ImageButton
         android:id="@+id/addfileon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="245dp"
-        android:layout_marginTop="255dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="530dp"
         android:background="@drawable/newfolder"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"/>
@@ -95,12 +100,12 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:gravity="center"
-        android:layout_below="@id/newCreate"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="249dp"
+        android:layout_toRightOf="@id/addfileon"
+        android:layout_marginTop="540dp"
+        android:layout_marginLeft="20dp"
         android:text="불러오기"
-        android:fontFamily="@font/bmhannapro"
-        android:textColor="@color/black"
+        android:fontFamily="@font/opensansregular"
+        android:textColor="@color/secondpencolor"
         android:textSize="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
