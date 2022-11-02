@@ -69,13 +69,13 @@ class selectDocsActivity : AppCompatActivity() {
                         Banners.size
                     )
                 )
-                if (currentPosition > 3) currentPosition = 0
+                if (currentPosition > 2) currentPosition = 0
             }
         })
 
         //페이지 변경하기
         fun setPage() {
-            if (currentPosition > 3) currentPosition = 0
+            if (currentPosition > 2) currentPosition = 0
             viewPager2.setCurrentItem(currentPosition, true)
             currentPosition += 1
         }
