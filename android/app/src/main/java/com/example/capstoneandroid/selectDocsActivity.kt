@@ -26,6 +26,7 @@ class selectDocsActivity : AppCompatActivity() {
         val newCreate = findViewById<ImageButton>(R.id.newCreate)
         val addfileon = findViewById<ImageButton>(R.id.addfileon)
 
+        Glide.with(this).load(R.raw.newfile_thin2).into(newCreate)
 
         newCreate.setOnClickListener {
             val intent = Intent(this@selectDocsActivity, stylusActivity::class.java)

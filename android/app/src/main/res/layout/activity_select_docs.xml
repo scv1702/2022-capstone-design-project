@@ -56,7 +56,7 @@
         android:layout_marginTop="55dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F2F2F2">
+        android:background="@color/colorLightGray">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
@@ -109,41 +109,44 @@
             app:layout_constraintRight_toRightOf="parent"
             />
 
-        <View
+        <FrameLayout
+            android:elevation="1dp"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="27dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/white_ellipse"></View>
+            android:background="@drawable/white_ellipse">
 
-        <ImageButton
-            android:id="@+id/newCreate"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="73dp"
-            android:layout_marginLeft="83dp"
-            android:layout_below="@id/docuSelect"
-            android:background="@drawable/newfile_thin"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            <ImageButton
+                android:id="@+id/newCreate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="29dp"
+                android:layout_marginLeft="35dp"
+                android:layout_below="@id/docuSelect"
+                android:background="@color/white"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:fontFamily="@font/bmhannapro"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:text="빈 문서"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                />
+        </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="255dp"
-            android:adjustViewBounds="true"
-            android:fontFamily="@font/bmhannapro"
-            android:gravity="center"
-            android:scaleType="fitCenter"
-            android:text="빈 문서"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
-
-        <View
+        <FrameLayout
+            android:elevation="1dp"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:background="@drawable/white_ellipse"
@@ -151,31 +154,43 @@
             android:layout_marginLeft="210dp"
             android:layout_marginTop="15dp"
             >
-        </View>
-        <ImageButton
-            android:id="@+id/addfileon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="73dp"
-            android:layout_marginLeft="260dp"
-            android:layout_below="@+id/docuSelect"
-            android:background="@drawable/newfolder"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+            <ImageButton
+                android:id="@+id/addfileon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="66dp"
+                android:layout_marginLeft="50dp"
+                android:layout_below="@+id/docuSelect"
+                android:background="@drawable/newfolder"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_marginTop="255dp"
-            android:layout_marginLeft="225dp"
-            android:text="불러오기"
-            android:fontFamily="@font/bmhannapro"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:text="불러오기"
+                android:fontFamily="@font/bmhannapro"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </FrameLayout>
+
+        <View
+            android:layout_width="250dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="440dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/docuSelect"
+            android:background="@color/backgroundColor"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             />
 
         <TextView
@@ -189,6 +204,7 @@
             android:textColor="@color/mainpencolor"
             android:fontFamily="@font/opensanssemibold"
             android:textSize="15dp"/>
+
         <View
             android:layout_width="250dp"
             android:layout_height="2dp"
@@ -201,7 +217,8 @@
             app:layout_constraintRight_toRightOf="parent"
             />
 
-        <View
+        <FrameLayout
+            android:elevation="1dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/white_ellipse"
@@ -209,72 +226,74 @@
             android:layout_marginLeft="300dp"
             android:layout_marginTop="5dp"
             >
-        </View>
-        <ImageButton
-            android:id="@+id/buildingScore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/officebuilding"
-            android:layout_below="@id/famousDocu"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="320dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            <ImageButton
+                android:id="@+id/buildingScore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/officebuilding"
+                android:layout_below="@id/famousDocu"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="317dp"
-            android:text="기업 보고서"
-            android:layout_below="@id/buildingScore"
-            android:fontFamily="@font/opensanssemibold"
-            android:textColor="#2c3e50"
-            android:textSize="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="16dp"
+                android:text="기업 보고서"
+                android:layout_below="@id/buildingScore"
+                android:fontFamily="@font/opensanssemibold"
+                android:textColor="#2c3e50"
+                android:textSize="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
+            android:elevation="1dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/white_ellipse"
             android:layout_below="@id/famousDocu"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="5dp"
-            >
-        </View>
-        <ImageButton
-            android:id="@+id/meetingScore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="140dp"
-            android:layout_below="@+id/famousDocu"
-            android:background="@drawable/meeting"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+                >
+            <ImageButton
+                android:id="@+id/meetingScore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/famousDocu"
+                android:background="@drawable/meeting"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="146dp"
-            android:text="회의록"
-            android:layout_below="@id/schoolScore"
-            android:fontFamily="@font/opensanssemibold"
-            android:textColor="#2c3e50"
-            android:textSize="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="26dp"
+                android:text="회의록"
+                android:layout_below="@id/schoolScore"
+                android:fontFamily="@font/opensanssemibold"
+                android:textColor="#2c3e50"
+                android:textSize="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
+            android:elevation="1dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/white_ellipse"
@@ -282,35 +301,36 @@
             android:layout_marginLeft="210dp"
             android:layout_marginTop="5dp"
             >
-        </View>
-        <ImageButton
-            android:id="@+id/schoolScore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="230dp"
-            android:layout_below="@+id/famousDocu"
-            android:background="@drawable/grade"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+            <ImageButton
+                android:id="@+id/schoolScore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/famousDocu"
+                android:background="@drawable/grade"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="227dp"
-            android:text="대학 레포트"
-            android:layout_below="@id/schoolScore"
-            android:fontFamily="@font/opensanssemibold"
-            android:textColor="#2c3e50"
-            android:textSize="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="17dp"
+                android:text="대학 레포트"
+                android:layout_below="@id/schoolScore"
+                android:fontFamily="@font/opensanssemibold"
+                android:textColor="#2c3e50"
+                android:textSize="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </FrameLayout>
 
-        <View
+        <FrameLayout
+            android:elevation="1dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/white_ellipse"
@@ -318,33 +338,34 @@
             android:layout_marginLeft="27dp"
             android:layout_marginTop="5dp"
             >
-        </View>
-        <ImageButton
-            android:id="@+id/resumeScore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="50dp"
-            android:layout_below="@+id/famousDocu"
-            android:background="@drawable/resume"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+            <ImageButton
+                android:id="@+id/resumeScore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="24dp"
+                android:layout_below="@+id/famousDocu"
+                android:background="@drawable/resume"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="53dp"
-            android:text="이력서"
-            android:layout_below="@id/resumeScore"
-            android:fontFamily="@font/opensanssemibold"
-            android:textColor="#2c3e50"
-            android:textSize="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="27dp"
+                android:text="이력서"
+                android:layout_below="@id/resumeScore"
+                android:fontFamily="@font/opensanssemibold"
+                android:textColor="#2c3e50"
+                android:textSize="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
+        </FrameLayout>
+
 
         <View
             android:id="@+id/yesform"
@@ -383,11 +404,11 @@
 
         <View
             android:id="@+id/bizform"
-            android:layout_width="90dp"
+            android:layout_width="85dp"
             android:layout_height="30dp"
             android:background="@drawable/white_ellipse"
             android:layout_below="@id/docuSelect"
-            android:layout_marginLeft="125dp"
+            android:layout_marginLeft="127dp"
             android:layout_marginTop="328dp"
             >
         </View>
@@ -401,7 +422,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
-            android:layout_marginLeft="140dp"
+            android:layout_marginLeft="142dp"
             android:layout_marginTop="333dp"/>
         <TextView
             android:layout_width="wrap_content"
@@ -413,16 +434,16 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
-            android:layout_marginLeft="157dp"
+            android:layout_marginLeft="159dp"
             android:layout_marginTop="335dp"/>
 
         <View
             android:id="@+id/jobkorea"
-            android:layout_width="95dp"
+            android:layout_width="90dp"
             android:layout_height="30dp"
             android:background="@drawable/white_ellipse"
             android:layout_below="@id/docuSelect"
-            android:layout_marginLeft="225dp"
+            android:layout_marginLeft="220dp"
             android:layout_marginTop="328dp"
             >
         </View>
@@ -436,7 +457,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
-            android:layout_marginLeft="240dp"
+            android:layout_marginLeft="235dp"
             android:layout_marginTop="333dp"/>
         <TextView
             android:layout_width="wrap_content"
@@ -448,7 +469,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
-            android:layout_marginLeft="255dp"
+            android:layout_marginLeft="250dp"
             android:layout_marginTop="335dp"/>
 
     </RelativeLayout>
