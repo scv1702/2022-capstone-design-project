@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +14,14 @@ import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.capstoneandroid.databinding.ActivitySelectDocsBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
-class selectDocsActivity : AppCompatActivity() {
+class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val binding by lazy { ActivitySelectDocsBinding.inflate(layoutInflater) }
     var currentPosition = 0
+    private val user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,8 @@ class selectDocsActivity : AppCompatActivity() {
 
         val newCreate = findViewById<ImageButton>(R.id.newCreate)
         val addfileon = findViewById<ImageButton>(R.id.addfileon)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
 
         Glide.with(this).load(R.raw.newfile_thin2).into(newCreate)
 
@@ -100,6 +106,33 @@ class selectDocsActivity : AppCompatActivity() {
         //뷰페이저 넘기는 쓰레드
         val thread = Thread(PagerRunnable())
         thread.start()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_home -> {
+                val intent = Intent(this@selectDocsActivity, selectDocsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_search -> {
+                return true
+            }
+            R.id.action_account -> {
+                Log.d("user", "$user")
+                if (user != null) {
+                    val intent = Intent(this@selectDocsActivity, AccountActivity::class.java)
+                    startActivity(intent)
+                    return true
+                } else {
+                    val intent = Intent(this@selectDocsActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
 }
