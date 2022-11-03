@@ -6,6 +6,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.*
 import android.graphics.pdf.PdfDocument
@@ -14,6 +15,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.InputType
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -25,6 +27,9 @@ import com.example.capstoneandroid.PaintView.Companion.currentBrush
 import com.example.capstoneandroid.PaintView.Companion.pathList
 import com.example.capstoneandroid.databinding.ActivityStylusBinding
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.theartofdev.edmodo.cropper.CropImage
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -49,6 +54,10 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     var PICK_IMAGE_FROM_ALBUM = 0
     var PICK_IMAGE_FROM_ALBUM_Vaild = 0
     var transTextSize= 26
+    var code = 0
+    var file = ""
+    private val user = FirebaseAuth.getInstance().currentUser
+    private val storage = Firebase.storage
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,17 +74,32 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
         val secondIntent = intent
         val checkstylus= secondIntent.getIntExtra("번호", 0)
-        if (checkstylus==8){ // Addfileon // 8이 아니라면, 빈 문서를 선택한 것(newCreate)이므로 첫 시작에 앨범 열 필요 X
+        val fileName = secondIntent.getStringExtra("이미지")
+        code = checkstylus
+        if (fileName != null) {
+            file = fileName
+        }
+
+        if (checkstylus == 8){ // Addfileon // 8이 아니라면, 빈 문서를 선택한 것(newCreate)이므로 첫 시작에 앨범 열 필요 X
             // Open the album
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+        } else if (checkstylus == 7) {
+            val storageRef = storage.reference
+            val pathReference = storageRef.child(user!!.email + '/' + fileName)
+
+            val ONE_MEGABYTE: Long = 1024 * 1024
+            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+                binding.ImageUpdate.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
+            }.addOnFailureListener {
+                // Handle any errors
+            }
         }
 
         val captureButton = findViewById<Button>(R.id.SCbutton)
         val MouseCaptureButton = findViewById<Button>(R.id.MouseCapture)
         val resetButton = findViewById<Button>(R.id.resetPen)
-        val pdfButton = findViewById<Button>(R.id.capturePDF)
 
         // val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
 
@@ -298,6 +322,30 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     }
     //////////////////////////////SCREENSHOT CODE END///////////////////////
 
+    private fun saveMyAccount (name: String) {
+        val storageRef = storage.reference
+
+        val fileRef = storageRef.child(user!!.email.toString() + '/' + name + ".jpg")
+
+        val imageRef = storageRef.child("image/" + user!!.email.toString() + '/' + name + ".jpg")
+
+        fileRef.name == imageRef.name // true
+        fileRef.path == imageRef.path // false
+
+        val cardView = findViewById<MaterialCardView>(R.id.cardView)
+        val bitmap = getScreenShotFromView(cardView)
+        val baos = ByteArrayOutputStream()
+        bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = fileRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            Toast.makeText(this, "저장 실패!", Toast.LENGTH_LONG).show()
+        }.addOnSuccessListener { taskSnapshot ->
+            Toast.makeText(this, "저장되었습니다!", Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun savePNGToStorage() {
         val cardView = findViewById<MaterialCardView>(R.id.cardView)
         val bitmap = getScreenShotFromView(cardView)
@@ -398,6 +446,28 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     // 팝업 메뉴 아이템 클릭 시 실행되는 메소드
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
+            R.id.saveInApp -> {
+                if (user != null && code != 7) {
+                    val alert = AlertDialog.Builder(this)
+                    val input = EditText(this)
+                    input.hint = "파일 이름"
+                    input.inputType = InputType.TYPE_CLASS_TEXT
+                    alert.setTitle("내 계정에 저장")
+                        .setView(input)
+                        .setPositiveButton("OK") { dialog, which ->
+                            var fileName = input.text.toString()
+                            saveMyAccount(fileName)
+                        }
+                        .setNegativeButton("Cancel") { dialog, which ->
+                            dialog.cancel()
+                        }
+                    alert.show()
+                } else if (user != null && code == 7) {
+                    saveMyAccount(file.substring(0 until file.length - 4))
+                } else {
+                    Toast.makeText(this, "로그인 후 이용하세요!!", Toast.LENGTH_LONG).show()
+                }
+            }
             R.id.captureBitmap -> {
                 Toast.makeText(this, "CaptureBitmap!!", Toast.LENGTH_LONG).show()
                 savePNGToStorage()
