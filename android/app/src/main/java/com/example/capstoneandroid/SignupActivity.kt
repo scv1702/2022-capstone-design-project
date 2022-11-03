@@ -51,6 +51,8 @@ class SignupActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
                 return true
             }
             R.id.action_search -> {
+                val intent = Intent(this@SignupActivity, MyFileActivity::class.java)
+                startActivity(intent)
                 return true
             }
             R.id.action_account -> {

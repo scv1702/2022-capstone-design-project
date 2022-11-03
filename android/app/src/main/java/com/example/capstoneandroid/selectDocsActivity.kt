@@ -37,12 +37,14 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
         newCreate.setOnClickListener {
             val intent = Intent(this@selectDocsActivity, stylusActivity::class.java)
             intent.putExtra("번호", 9)
+            intent.putExtra("이미지", "")
             startActivity(intent)
         }
 
         addfileon.setOnClickListener {
             val intent = Intent(this@selectDocsActivity, stylusActivity::class.java)
             intent.putExtra("번호", 8)
+            intent.putExtra("이미지", "")
             startActivity(intent)
         }
 
@@ -116,6 +118,8 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
                 return true
             }
             R.id.action_search -> {
+                val intent = Intent(this@selectDocsActivity, MyFileActivity::class.java)
+                startActivity(intent)
                 return true
             }
             R.id.action_account -> {
