@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
 
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'androidx.databinding:databinding-runtime:7.1.2'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
