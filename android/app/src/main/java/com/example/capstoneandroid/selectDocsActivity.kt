@@ -123,7 +123,6 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
                 return true
             }
             R.id.action_account -> {
-                Log.d("user", "$user")
                 if (user != null) {
                     val intent = Intent(this@selectDocsActivity, AccountActivity::class.java)
                     startActivity(intent)
