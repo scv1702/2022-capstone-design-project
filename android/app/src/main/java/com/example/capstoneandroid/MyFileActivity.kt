@@ -28,18 +28,24 @@ class MyFileActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
         setContentView(binding.root)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val listRef = storage.reference.child(user!!.email.toString())
-        listRef.listAll()
-            .addOnSuccessListener { (items, prefixes) ->
-                recyclerView.adapter = ItemAdapter(this, items)
-                recyclerView.setHasFixedSize(true)
+        if (user != null) {
+            val listRef = storage.reference.child(user!!.email.toString())
+            listRef.listAll()
+                .addOnSuccessListener { (items, prefixes) ->
+                    recyclerView.adapter = ItemAdapter(this, items)
+                    recyclerView.setHasFixedSize(true)
 
-                items.forEach { item ->
-                    Log.d("list item", "${item.name.substring(0 until item.name.length - 4)}")
+                    items.forEach { item ->
+                        Log.d("list item", "${item.name.substring(0 until item.name.length - 4)}")
+                    }
                 }
-            }
-            .addOnFailureListener {
-            }
+                .addOnFailureListener {
+                }
+        } else {
+            Toast.makeText(this, "로그인 후 이용해 주세요", Toast.LENGTH_LONG).show()
+            val intent = Intent(this@MyFileActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -55,7 +61,7 @@ class MyFileActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
                 return true
             }
             R.id.action_account -> {
-                val intent = Intent(this@MyFileActivity, LoginActivity::class.java)
+                val intent = Intent(this@MyFileActivity, AccountActivity::class.java)
                 startActivity(intent)
                 return true
             }
