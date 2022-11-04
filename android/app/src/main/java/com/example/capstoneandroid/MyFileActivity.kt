@@ -46,7 +46,7 @@ class MyFileActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
                 .addOnFailureListener {
                 }
         } else {
-            Toast.makeText(this, "로그인 후 이용해 주세요", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "로그인 후 이용하세요.", Toast.LENGTH_LONG).show()
             val intent = Intent(this@MyFileActivity, LoginActivity::class.java)
             startActivity(intent)
         }

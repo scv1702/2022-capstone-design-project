@@ -26,6 +26,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:ems="9"
-        android:hint="기본: 26F"
+        android:hint="기본: 26"
         android:inputType="textPersonName" />
 </LinearLayout>

@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
                 return true
             }
             R.id.action_search -> {
-                Toast.makeText(this, "로그인 후 이용하세요!!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "로그인 후 이용하세요.", Toast.LENGTH_LONG).show()
             }
             R.id.action_account -> {
                 return true

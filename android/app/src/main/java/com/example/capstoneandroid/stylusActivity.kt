@@ -80,6 +80,11 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             file = fileName
         }
 
+        // stylusAcitivity 실행될 때마다 필기체 초기화하고 시작
+        pathList.clear()
+        colorList.clear()
+        path.reset()
+
         if (checkstylus == 8){ // Addfileon // 8이 아니라면, 빈 문서를 선택한 것(newCreate)이므로 첫 시작에 앨범 열 필요 X
             // Open the album
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
@@ -96,6 +101,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 // Handle any errors
             }
         }
+
 
         val captureButton = findViewById<Button>(R.id.SCbutton)
         val MouseCaptureButton = findViewById<Button>(R.id.MouseCapture)
@@ -432,7 +438,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
-                Toast.makeText(this, "${dialogText.text.toString()}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "변경된 사이즈: ${dialogText.text.toString()}", Toast.LENGTH_LONG).show()
                 /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
                 transTextSize= dialogText.text.toString().toInt()
 
@@ -469,11 +475,11 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 }
             }
             R.id.captureBitmap -> {
-                Toast.makeText(this, "CaptureBitmap!!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "저장완료", Toast.LENGTH_LONG).show()
                 savePNGToStorage()
             }
             R.id.capturePDF -> {
-                Toast.makeText(this, "CapturePDF!!!!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "저장완료", Toast.LENGTH_LONG).show()
                 savePDFToStorage()
             }
 
