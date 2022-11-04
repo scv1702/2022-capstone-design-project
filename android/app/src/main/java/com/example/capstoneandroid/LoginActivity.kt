@@ -17,6 +17,10 @@ class LoginActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        bottomNavigationView.menu.getItem(2).isChecked=true // 해당 액티비티에 맞게 메뉴바 아이콘 색상선택
+
         val goToSignup = findViewById<Button>(R.id.btn_goToSignup)
         val loginButton = findViewById<Button>(R.id.btn_login)
         val inputEmail = findViewById<EditText>(R.id.login_email)
@@ -52,13 +56,9 @@ class LoginActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
                 return true
             }
             R.id.action_search -> {
-                val intent = Intent(this@LoginActivity, MyFileActivity::class.java)
-                startActivity(intent)
-                return true
+                Toast.makeText(this, "로그인 후 이용하세요!!", Toast.LENGTH_LONG).show()
             }
             R.id.action_account -> {
-                val intent = Intent(this@LoginActivity, LoginActivity::class.java)
-                startActivity(intent)
                 return true
             }
         }

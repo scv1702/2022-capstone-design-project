@@ -19,6 +19,10 @@ class AccountActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIt
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account)
 
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        bottomNavigationView.menu.getItem(2).isChecked=true // 해당 액티비티에 맞게 메뉴바 아이콘 색상선택
+
         val myAccount = findViewById<TextView>(R.id.text_myAccount)
         val logoutButton = findViewById<Button>(R.id.btn_logout)
         auth = FirebaseAuth.getInstance()
@@ -43,11 +47,11 @@ class AccountActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIt
                 return true
             }
             R.id.action_search -> {
+                val intent = Intent(this@AccountActivity, MyFileActivity::class.java)
+                startActivity(intent)
                 return true
             }
             R.id.action_account -> {
-                val intent = Intent(this@AccountActivity, LoginActivity::class.java)
-                startActivity(intent)
                 return true
             }
         }

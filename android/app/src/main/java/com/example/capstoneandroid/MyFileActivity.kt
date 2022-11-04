@@ -27,6 +27,10 @@ class MyFileActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        bottomNavigationView.menu.getItem(1).isChecked=true // 해당 액티비티에 맞게 메뉴바 아이콘 색상선택
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         if (user != null) {
             val listRef = storage.reference.child(user!!.email.toString())
@@ -56,8 +60,6 @@ class MyFileActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
                 return true
             }
             R.id.action_search -> {
-                val intent = Intent(this@MyFileActivity, MyFileActivity::class.java)
-                startActivity(intent)
                 return true
             }
             R.id.action_account -> {

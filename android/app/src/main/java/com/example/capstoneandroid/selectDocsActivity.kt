@@ -31,6 +31,8 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
         val addfileon = findViewById<ImageButton>(R.id.addfileon)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        bottomNavigationView.menu.getItem(0).isChecked=true // 해당 액티비티에 맞게 메뉴바 색상선택
+
 
         Glide.with(this).load(R.raw.newfile_thin2).into(newCreate)
 
@@ -113,8 +115,6 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.action_home -> {
-                val intent = Intent(this@selectDocsActivity, selectDocsActivity::class.java)
-                startActivity(intent)
                 return true
             }
             R.id.action_search -> {
