@@ -33,7 +33,6 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.menu.getItem(0).isChecked=true // 해당 액티비티에 맞게 메뉴바 색상선택
 
-
         Glide.with(this).load(R.raw.newfile_thin2).into(newCreate)
 
         newCreate.setOnClickListener {

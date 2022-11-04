@@ -55,7 +55,7 @@ class SignupActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIte
                 return true
             }
             R.id.action_search -> {
-                Toast.makeText(this, "로그인 후 이용하세요!!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "로그인 후 이용하세요.", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.action_account -> {
