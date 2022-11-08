@@ -2,6 +2,7 @@ package com.example.capstoneandroid.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstoneandroid.R
 import com.example.capstoneandroid.stylusActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 
 class ItemAdapter(private val context: Context, private val dataset: List<StorageReference>): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -29,6 +33,13 @@ class ItemAdapter(private val context: Context, private val dataset: List<Storag
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.textView.text = item.name.substring(0 until item.name.length - 4)
+
+        val ONE_MEGABYTE: Long = 1024 * 1024
+        item.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+            holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
+        }.addOnFailureListener {
+            // Handle any errors
+        }
 
         holder.itemView.setOnClickListener {
             Log.d("click", "$item")
