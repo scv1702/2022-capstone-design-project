@@ -74,6 +74,6 @@
         android:text="Loading"
         android:textColor="@color/white"
         android:textSize="15dp"
-        />
+    />
 
 </RelativeLayout>
