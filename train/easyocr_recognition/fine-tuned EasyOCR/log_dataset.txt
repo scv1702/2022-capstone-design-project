@@ -1,0 +1,143 @@
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 0
+num total samples of /: 0 x 1.0 (total_data_usage_ratio) = 0
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 0
+num total samples of /: 0 x 1.0 (total_data_usage_ratio) = 0
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 320183
+num total samples of /: 320183 x 1.0 (total_data_usage_ratio) = 320183
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35219
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 320183
+num total samples of /: 320183 x 1.0 (total_data_usage_ratio) = 320183
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35219
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 323789
+num total samples of /: 323789 x 1.0 (total_data_usage_ratio) = 323789
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35629
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 323789
+num total samples of /: 323789 x 1.0 (total_data_usage_ratio) = 323789
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35629
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 323789
+num total samples of /: 323789 x 1.0 (total_data_usage_ratio) = 323789
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35629
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 323789
+num total samples of /: 323789 x 1.0 (total_data_usage_ratio) = 323789
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35629
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 323789
+num total samples of /: 323789 x 1.0 (total_data_usage_ratio) = 323789
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35629
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+dataset_root: /content/deep-text-recognition-benchmark/train_data/data
+opt.select_data: ['/']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/train_data/data	 dataset: /
+sub-directory:	/.	 num samples: 323789
+num total samples of /: 323789 x 1.0 (total_data_usage_ratio) = 323789
+num samples of / per batch: 256 x 1.0 (batch_ratio) = 256
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    /content/deep-text-recognition-benchmark/test_data/data	 dataset: /
+sub-directory:	/.	 num samples: 35629
+--------------------------------------------------------------------------------
