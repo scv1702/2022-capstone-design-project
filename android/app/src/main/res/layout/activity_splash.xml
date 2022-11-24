@@ -35,9 +35,9 @@
         android:id="@+id/main_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="315dp">
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/id_title_layout">
 
         <RelativeLayout
             android:id="@+id/loading_layout"
@@ -69,8 +69,9 @@
         android:gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:layout_marginTop="400dp"
+        android:layout_below="@+id/main_loading"
         android:fontFamily="@font/bmhannapro"
+        android:layout_marginTop="10dp"
         android:text="Loading"
         android:textColor="@color/white"
         android:textSize="15dp"
