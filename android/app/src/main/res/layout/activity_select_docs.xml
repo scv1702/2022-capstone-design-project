@@ -92,14 +92,14 @@
             android:layout_height="wrap_content"
             android:text="문서 선택"
             android:layout_marginLeft="28dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:textColor="@color/mainpencolor"
             android:fontFamily="@font/opensanssemibold"
             android:textSize="15dp"/>
         <View
             android:layout_width="250dp"
             android:layout_height="2dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="34dp"
             android:layout_below="@+id/container"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/docuSelect"
@@ -181,24 +181,12 @@
                 />
         </FrameLayout>
 
-        <View
-            android:layout_width="250dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="440dp"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/docuSelect"
-            android:background="@color/backgroundColor"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
         <TextView
             android:id="@+id/famousDocu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인기 문서"
-            android:layout_marginTop="430dp"
+            android:layout_marginTop="445dp"
             android:layout_marginLeft="28dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/mainpencolor"
@@ -208,7 +196,7 @@
         <View
             android:layout_width="250dp"
             android:layout_height="2dp"
-            android:layout_marginTop="440dp"
+            android:layout_marginTop="455dp"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/docuSelect"
             android:background="@color/backgroundColor"
@@ -374,7 +362,7 @@
             android:background="@drawable/white_ellipse"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="27dp"
-            android:layout_marginTop="328dp"
+            android:layout_marginTop="333dp"
             >
         </View>
         <TextView
@@ -388,7 +376,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="43dp"
-            android:layout_marginTop="333dp"/>
+            android:layout_marginTop="338dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -400,7 +388,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="60dp"
-            android:layout_marginTop="335dp"/>
+            android:layout_marginTop="340dp"/>
 
         <View
             android:id="@+id/bizform"
@@ -409,7 +397,7 @@
             android:background="@drawable/white_ellipse"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="127dp"
-            android:layout_marginTop="328dp"
+            android:layout_marginTop="333dp"
             >
         </View>
         <TextView
@@ -423,7 +411,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="142dp"
-            android:layout_marginTop="333dp"/>
+            android:layout_marginTop="338dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -435,7 +423,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="159dp"
-            android:layout_marginTop="335dp"/>
+            android:layout_marginTop="340dp"/>
 
         <View
             android:id="@+id/jobkorea"
@@ -444,7 +432,7 @@
             android:background="@drawable/white_ellipse"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="220dp"
-            android:layout_marginTop="328dp"
+            android:layout_marginTop="333dp"
             >
         </View>
         <TextView
@@ -458,7 +446,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="235dp"
-            android:layout_marginTop="333dp"/>
+            android:layout_marginTop="338dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -470,7 +458,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/docuSelect"
             android:layout_marginLeft="250dp"
-            android:layout_marginTop="335dp"/>
+            android:layout_marginTop="340dp"/>
 
     </RelativeLayout>
 
