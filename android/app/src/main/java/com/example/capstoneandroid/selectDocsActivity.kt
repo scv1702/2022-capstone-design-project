@@ -100,8 +100,8 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
         class PagerRunnable : Runnable {
             override fun run() {
                 while (true) {
-                    Thread.sleep(2000)
                     handler.sendEmptyMessage(0)
+                    Thread.sleep(1800)
                 }
             }
         }
