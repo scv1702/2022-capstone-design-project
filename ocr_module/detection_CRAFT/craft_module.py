@@ -3,12 +3,14 @@ import cv2
 import platform
 import file_utils
 import imgproc
-
+import PIL
+from PIL import Image
 import torch
 import torch.nn as nn
 import torch.nn.init as init
 import torch.nn.functional as F
 from torch.autograd import Variable
+from flask_restful import Resource, Api, reqparse, abort
 from flask_cors import CORS
 import torchvision.models as models
 from torchvision.models.vgg import model_urls
@@ -173,7 +175,7 @@ def to_device(data, device):
 
 def net(net, image, text_threshold=0.7, link_threshold=0.4, low_text=0.4, cuda=False, poly=False, refine_net=None):
     # resize
-    img_resized, target_ratio, size_heatmap = imgproc.resize_aspect_ratio(image, canvas_size=1280, interpolation=cv2.INTER_LINEAR, mag_ratio=1.5)
+    img_resized, target_ratio, size_heatmap = imgproc.resize_aspect_ratio(image, square_size=1280, interpolation=cv2.INTER_LINEAR, mag_ratio=1.5)
     ratio_h = ratio_w = 1 / target_ratio
 
     # preprocessing
@@ -221,8 +223,21 @@ def text_detection():
 
         image = imgproc.loadImage(file)
         detection = predict_image(image, model)
-        return jsonify(detection)
+        return jsonify({'bbox': detection.tolist()})
+        
+"""@app.route('/predict', methods=['POST'])
+class BoundBox(Resource):
+    def text_detection(): 
+        if request.method == 'POST':
+            file = request.files['image']
+            if not file: return 'None'
 
+            image = imgproc.loadImage(file)
+            detection = predict_image(image, model)
+            return jsonify({'bbox':detection})"""
+
+#api.add_resource(BoundBox, '/predict')
+ 
 if __name__ == '__main__':
     device = torch.device("cpu")
     model_path = 'model/craft_mlt_25k.pth'
@@ -230,4 +245,4 @@ if __name__ == '__main__':
     model = CRAFT()
     model.load_state_dict(copyStateDict(torch.load(model_path, map_location="cpu")))
 
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
