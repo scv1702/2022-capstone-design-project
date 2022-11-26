@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/sdk
+/PaddleLite
+/app/src/main/assets/models
