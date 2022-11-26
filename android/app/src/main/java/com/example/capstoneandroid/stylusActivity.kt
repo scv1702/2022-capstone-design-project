@@ -1,12 +1,10 @@
 package com.example.capstoneandroid
 
-import android.R.id.message
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.*
 import android.graphics.pdf.PdfDocument
@@ -39,25 +37,27 @@ import java.lang.reflect.Field
 
 
 @Suppress("DEPRECATION")
-class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
+class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private val binding by lazy { ActivityStylusBinding.inflate(layoutInflater) }
 
-    companion object{
+    companion object {
         var path = Path()
         var paintBrush = Paint()
     }
 
     var detector: GestureDetector? = null //무슨 제스쳐를 했는지 감지
-    var xValue= 0
-    var yValue= 0
-    var URII : Uri? = null
+    var xValue = 0
+    var yValue = 0
+    var URII: Uri? = null
     var PICK_IMAGE_FROM_ALBUM = 0
     var PICK_IMAGE_FROM_ALBUM_Vaild = 0
-    var transTextSize= 26
+    var transTextSize = 26
     var code = 0
     var file = ""
     private val user = FirebaseAuth.getInstance().currentUser
     private val storage = Firebase.storage
+
+    private var predictor: Predictor = Predictor()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,15 +65,30 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        if (predictor.isLoaded()) {
+            predictor.releaseModel()
+        }
+
+        predictor.init(
+            this@stylusActivity,
+            "models/ko_PP-OCRv3",
+            "labels/korean_dict.txt",
+            0,
+            4,
+            "LITE_POWER_HIGH",
+            960,
+            0.1F
+        )
+
         // POPUP
         binding.popupID.setOnClickListener { showPopup(binding.popupID) }
         // PEN_POPUP
         binding.penColor.setOnClickListener { showPopupColor(binding.penColor) }
         // Setting_POPUP
-        binding.StylusSetting.setOnClickListener{ showAlertSetting(binding.StylusSetting)}
+        binding.StylusSetting.setOnClickListener { showAlertSetting(binding.StylusSetting) }
 
         val secondIntent = intent
-        val checkstylus= secondIntent.getIntExtra("번호", 0)
+        val checkstylus = secondIntent.getIntExtra("번호", 0)
         val fileName = secondIntent.getStringExtra("이미지")
         code = checkstylus
         if (fileName != null) {
@@ -85,7 +100,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         colorList.clear()
         path.reset()
 
-        if (checkstylus == 8){ // Addfileon // 8이 아니라면, 빈 문서를 선택한 것(newCreate)이므로 첫 시작에 앨범 열 필요 X
+        if (checkstylus == 8) { // Addfileon // 8이 아니라면, 빈 문서를 선택한 것(newCreate)이므로 첫 시작에 앨범 열 필요 X
             // Open the album
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
@@ -109,7 +124,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
         // val StylusSettingButton = findViewById<Button>(R.id.StylusSetting)
 
-        var currentAction= ""
+        var currentAction = ""
         detector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             //화면을 손가락으로 오랫동안 눌렀을 경우
             override fun onLongPress(e: MotionEvent) {
@@ -135,7 +150,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             1
         )
 
-        val cardView= findViewById<MaterialCardView>(R.id.cardView)
+        val cardView = findViewById<MaterialCardView>(R.id.cardView)
 
         val gestureListener = View.OnTouchListener(function = { view, event ->
             detector!!.onTouchEvent(event)
@@ -169,14 +184,21 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 .start(this);
         }
 
-        resetButton.setOnClickListener{
+        resetButton.setOnClickListener {
             // 필기체 초기화
             pathList.clear()
             colorList.clear()
             path.reset()
         }
-
     }
+
+    override fun onDestroy() {
+        if (predictor != null) {
+            predictor.releaseModel()
+        }
+        super.onDestroy()
+    }
+
     // Cropper Activity execute GoGO!!
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -186,7 +208,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 val resultUri = result.uri
                 var bitmap: Bitmap? = null
                 try {
-                    bitmap=MediaStore.Images.Media.getBitmap(
+                    bitmap = MediaStore.Images.Media.getBitmap(
                         this.getContentResolver(), Uri.parse(
                             resultUri.toString()
                         )
@@ -196,8 +218,12 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 }
                 if (bitmap != null) {
                     saveMediaToStorage(bitmap)
+                    predictor.setInputImage(bitmap)
+                    predictor.runModel(1, 0, 1)
                 }
-                Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT)
+                    .show()
 
                 // 필기체 초기화
                 pathList.clear()
@@ -214,7 +240,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
                 layoutParams.gravity = Gravity.CENTER;
                 layoutParams.setMargins(xValue + 25, yValue + 25, 0, 0)
                 texts1.setLayoutParams(layoutParams)
-                texts1.setText("변환된 Text")
+                texts1.setText(predictor.outputResult)
                 texts1.setTextColor(Color.BLACK)
                 texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, transTextSize.toFloat())
                 val typeface = Typeface.createFromAsset(
@@ -234,16 +260,16 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         }
 
         var photoUrl: Uri?
-        if(requestCode == PICK_IMAGE_FROM_ALBUM){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == PICK_IMAGE_FROM_ALBUM) {
+            if (resultCode == Activity.RESULT_OK) {
                 // 선택된 이미지의 경로 값 저장
-                photoUrl= data?.data // 변수에다가 path data 담아줌
+                photoUrl = data?.data // 변수에다가 path data 담아줌
                 binding.ImageUpdate.setImageURI(photoUrl) // ImageView에다가 이미지 GOGO~
             }
         }
     }
 
-    fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri{
+    fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         // URI을 Bitmap으로 바꾸기위해 mediastore에 "Title"이라는 name의 image로 저장해놓지만
@@ -315,7 +341,8 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
             }
         } else {
             // These for devices running on android < Q
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             val image = File(imagesDir, filename)
             fos = FileOutputStream(image)
         }
@@ -328,7 +355,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     }
     //////////////////////////////SCREENSHOT CODE END///////////////////////
 
-    private fun saveMyAccount (name: String) {
+    private fun saveMyAccount(name: String) {
         val storageRef = storage.reference
 
         val fileRef = storageRef.child(user!!.email.toString() + '/' + name + ".jpg")
@@ -362,7 +389,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
     private fun savePDFToStorage() {
         val filename = "resume_${System.currentTimeMillis()}.pdf"
-        val cardView= findViewById<MaterialCardView>(R.id.cardView)
+        val cardView = findViewById<MaterialCardView>(R.id.cardView)
         val bitmap = getScreenShotFromView(cardView)
 
         if (bitmap != null) {
@@ -376,7 +403,10 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
 
             pdfDocument.finishPage(page)
 
-            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename)
+            val file = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                filename
+            )
 
             try {
                 pdfDocument.writeTo(FileOutputStream(file))
@@ -431,16 +461,18 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         }
         popupColor.show() // 팝업 보여주기
     }
-    private fun showAlertSetting(v: View){
+
+    private fun showAlertSetting(v: View) {
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.alertdialog, null)
         val dialogText = dialogView.findViewById<EditText>(R.id.dialogEt)
 
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
-                Toast.makeText(this, "변경된 사이즈: ${dialogText.text.toString()}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "변경된 사이즈: ${dialogText.text.toString()}", Toast.LENGTH_LONG)
+                    .show()
                 /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
-                transTextSize= dialogText.text.toString().toInt()
+                transTextSize = dialogText.text.toString().toInt()
 
             }
             .setNegativeButton("취소") { dialogInterface, i ->
@@ -499,7 +531,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
         return item != null // 아이템이 null이 아닌 경우 true, null인 경우 false 리턴
     }
 
-    private fun currentColor(color: Int){
+    private fun currentColor(color: Int) {
         currentBrush = color
         path = Path()
     }
