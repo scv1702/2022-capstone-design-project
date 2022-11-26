@@ -47,26 +47,35 @@ class PaintView : View{
 
         params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
+    var id = IntArray(3) // id값을 저장하는 배열
 
     override fun onTouchEvent(event: MotionEvent) :Boolean{
         var x = event.x
         var y = event.y
 
-        when(event.action){
-            MotionEvent.ACTION_DOWN -> {
-                path.moveTo(x,y)
-                return true
+        var pointer_count = event.pointerCount // 현재 터치 발생한 포인터 수를 얻는다.
+        if(pointer_count > 2) pointer_count = 2; //3개 이상의 포인트를 터치했더라도 2개까지만 처리를 한다.
+
+        when(event.action and MotionEvent.ACTION_MASK){
+            MotionEvent.ACTION_DOWN -> {  //한 개 포인트에 대한 DOWN을 얻을 때.
+                if(pointer_count == 1) {
+                    path.moveTo(x,y)
+                    return true
+                }
             }
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(x,y)
-                pathList.add(path)
-                colorList.add(currentBrush)
+                if(pointer_count == 1) {
+                    path.lineTo(x, y)
+                    pathList.add(path)
+                    colorList.add(currentBrush)
+                }
             }
             else -> return false
         }
         postInvalidate()
         return false;
     }
+
 
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
