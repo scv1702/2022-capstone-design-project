@@ -80,6 +80,10 @@ dependencies {
 
 def archives = [
         [
+                'src' : 'https://paddleocr.bj.bcebos.com/libs/paddle_lite_libs_v2_10.tar.gz',
+                'dest': '../PaddleLite'
+        ],
+        [
                 'src' : 'https://paddleocr.bj.bcebos.com/PP-OCRv2/lite/ch_PP-OCRv2.tar.gz',
                 'dest' : 'src/main/assets/models'
         ],
