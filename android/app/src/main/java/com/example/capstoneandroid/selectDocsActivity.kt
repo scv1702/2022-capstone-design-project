@@ -136,5 +136,4 @@ class selectDocsActivity : AppCompatActivity(), BottomNavigationView.OnNavigatio
 
         return false
     }
-
 }
