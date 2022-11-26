@@ -100,6 +100,4 @@ public class OCRPredictorNative {
         Log.i("OCRPredictorNative", "word finished " + wordNum);
         return res;
     }
-
-
 }
