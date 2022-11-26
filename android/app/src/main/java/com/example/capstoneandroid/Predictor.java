@@ -2,21 +2,13 @@ package com.example.capstoneandroid;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.util.Log;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Vector;
-
-import static android.graphics.Color.*;
 
 public class Predictor {
     private static final String TAG = Predictor.class.getSimpleName();
@@ -34,10 +26,7 @@ public class Predictor {
     protected int detLongSize = 960;
     protected float scoreThreshold = 0.1f;
     protected Bitmap inputImage = null;
-    protected Bitmap outputImage = null;
     protected volatile String outputResult = "";
-    protected float postprocessTime = 0;
-
 
     public Predictor() {
     }
@@ -101,7 +90,7 @@ public class Predictor {
 
     public void releaseModel() {
         if (paddlePredictor != null) {
-            paddlePredictor.destory();
+            paddlePredictor.destroy();
             paddlePredictor = null;
         }
         isLoaded = false;
@@ -148,11 +137,11 @@ public class Predictor {
         warmupIterNum = 0; // do not need warm
         // Run inference
         Date start = new Date();
-        ArrayList<OcrResultModel> results = paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
+        ArrayList<OCRResultModel> results = paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
         Date end = new Date();
         inferenceTime = (end.getTime() - start.getTime()) / (float) inferIterNum;
 
-        results = postprocess(results);
+        results = postProcess(results);
         Log.i(TAG, "[stat] Inference Time: " + inferenceTime + " ;Box Size " + results.size());
         drawResults(results);
 
@@ -163,42 +152,9 @@ public class Predictor {
         return paddlePredictor != null && isLoaded;
     }
 
-    public String modelPath() {
-        return modelPath;
-    }
-
-    public String modelName() {
-        return modelName;
-    }
-
-    public int cpuThreadNum() {
-        return cpuThreadNum;
-    }
-
-    public String cpuPowerMode() {
-        return cpuPowerMode;
-    }
-
-    public float inferenceTime() {
-        return inferenceTime;
-    }
-
     public Bitmap inputImage() {
         return inputImage;
     }
-
-    public Bitmap outputImage() {
-        return outputImage;
-    }
-
-    public String outputResult() {
-        return outputResult;
-    }
-
-    public float postprocessTime() {
-        return postprocessTime;
-    }
-
 
     public void setInputImage(Bitmap image) {
         if (image == null) {
@@ -207,8 +163,8 @@ public class Predictor {
         this.inputImage = image.copy(Bitmap.Config.ARGB_8888, true);
     }
 
-    private ArrayList<OcrResultModel> postprocess(ArrayList<OcrResultModel> results) {
-        for (OcrResultModel r : results) {
+    private ArrayList<OCRResultModel> postProcess(ArrayList<OCRResultModel> results) {
+        for (OCRResultModel r : results) {
             StringBuffer word = new StringBuffer();
             for (int index : r.getWordIndex()) {
                 if (index >= 0 && index < wordLabels.size()) {
@@ -224,55 +180,14 @@ public class Predictor {
         return results;
     }
 
-    private void drawResults(ArrayList<OcrResultModel> results) {
-        StringBuffer outputResultSb = new StringBuffer("");
+    private void drawResults(ArrayList<OCRResultModel> results) {
+        StringBuffer outputResultSb = new StringBuffer();
         for (int i = 0; i < results.size(); i++) {
-            OcrResultModel result = results.get(i);
-            StringBuilder sb = new StringBuilder("");
-            if(result.getPoints().size()>0){
-                sb.append("Det: ");
-                for (Point p : result.getPoints()) {
-                    sb.append("(").append(p.x).append(",").append(p.y).append(") ");
-                }
-            }
+            OCRResultModel result = results.get(i);
             if(result.getLabel().length() > 0){
-                sb.append("\n Rec: ").append(result.getLabel());
-                sb.append(",").append(result.getConfidence());
+                outputResultSb.append(result.getLabel()).append(" ");
             }
-            if(result.getClsIdx()!=-1){
-                sb.append(" Cls: ").append(result.getClsLabel());
-                sb.append(",").append(result.getClsConfidence());
-            }
-            Log.i(TAG, sb.toString()); // show LOG in Logcat panel
-            outputResultSb.append(i + 1).append(": ").append(sb.toString()).append("\n");
         }
         outputResult = outputResultSb.toString();
-        outputImage = inputImage;
-        Canvas canvas = new Canvas(outputImage);
-        Paint paintFillAlpha = new Paint();
-        paintFillAlpha.setStyle(Paint.Style.FILL);
-        paintFillAlpha.setColor(Color.parseColor("#3B85F5"));
-        paintFillAlpha.setAlpha(50);
-
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#3B85F5"));
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.STROKE);
-
-        for (OcrResultModel result : results) {
-            Path path = new Path();
-            List<Point> points = result.getPoints();
-            if(points.size()==0){
-                continue;
-            }
-            path.moveTo(points.get(0).x, points.get(0).y);
-            for (int i = points.size() - 1; i >= 0; i--) {
-                Point p = points.get(i);
-                path.lineTo(p.x, p.y);
-            }
-            canvas.drawPath(path, paint);
-            canvas.drawPath(path, paintFillAlpha);
-        }
     }
-
 }

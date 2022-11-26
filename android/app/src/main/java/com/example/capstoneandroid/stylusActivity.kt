@@ -57,7 +57,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private val user = FirebaseAuth.getInstance().currentUser
     private val storage = Firebase.storage
 
-    protected  var  predictor: Predictor = Predictor()
+    private var predictor: Predictor = Predictor()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -190,7 +190,13 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
             colorList.clear()
             path.reset()
         }
+    }
 
+    override fun onDestroy() {
+        if (predictor != null) {
+            predictor.releaseModel()
+        }
+        super.onDestroy()
     }
 
     // Cropper Activity execute GoGO!!

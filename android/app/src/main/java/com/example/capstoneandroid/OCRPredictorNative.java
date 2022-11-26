@@ -35,11 +35,10 @@ public class OCRPredictorNative {
 
     }
 
-
-    public ArrayList<OcrResultModel> runImage(Bitmap originalImage, int max_size_len, int run_det, int run_cls, int run_rec) {
+    public ArrayList<OCRResultModel> runImage(Bitmap originalImage, int max_size_len, int run_det, int run_cls, int run_rec) {
         Log.i("OCRPredictorNative", "begin to run image ");
         float[] rawResults = forward(nativePointer, originalImage, max_size_len, run_det, run_cls, run_rec);
-        ArrayList<OcrResultModel> results = postprocess(rawResults);
+        ArrayList<OCRResultModel> results = postProcess(rawResults);
         return results;
     }
 
@@ -50,10 +49,9 @@ public class OCRPredictorNative {
         public String detModelFilename;
         public String recModelFilename;
         public String clsModelFilename;
-
     }
 
-    public void destory() {
+    public void destroy() {
         if (nativePointer != 0) {
             release(nativePointer);
             nativePointer = 0;
@@ -66,14 +64,14 @@ public class OCRPredictorNative {
 
     protected native void release(long pointer);
 
-    private ArrayList<OcrResultModel> postprocess(float[] raw) {
-        ArrayList<OcrResultModel> results = new ArrayList<OcrResultModel>();
+    private ArrayList<OCRResultModel> postProcess(float[] raw) {
+        ArrayList<OCRResultModel> results = new ArrayList<OCRResultModel>();
         int begin = 0;
 
         while (begin < raw.length) {
             int point_num = Math.round(raw[begin]);
             int word_num = Math.round(raw[begin + 1]);
-            OcrResultModel res = parse(raw, begin + 2, point_num, word_num);
+            OCRResultModel res = parse(raw, begin + 2, point_num, word_num);
             begin += 2 + 1 + point_num * 2 + word_num + 2;
             results.add(res);
         }
@@ -81,9 +79,9 @@ public class OCRPredictorNative {
         return results;
     }
 
-    private OcrResultModel parse(float[] raw, int begin, int pointNum, int wordNum) {
+    private OCRResultModel parse(float[] raw, int begin, int pointNum, int wordNum) {
         int current = begin;
-        OcrResultModel res = new OcrResultModel();
+        OCRResultModel res = new OCRResultModel();
         res.setConfidence(raw[current]);
         current++;
         for (int i = 0; i < pointNum; i++) {

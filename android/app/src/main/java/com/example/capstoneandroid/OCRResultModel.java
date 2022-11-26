@@ -5,7 +5,7 @@ import android.graphics.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OcrResultModel {
+public class OCRResultModel {
     private List<Point> points;
     private List<Integer> wordIndex;
     private String label;
@@ -14,7 +14,7 @@ public class OcrResultModel {
     private String cls_label;
     private float cls_confidence;
 
-    public OcrResultModel() {
+    public OCRResultModel() {
         super();
         points = new ArrayList<>();
         wordIndex = new ArrayList<>();
