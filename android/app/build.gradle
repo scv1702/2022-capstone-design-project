@@ -48,11 +48,10 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0' //Circle ImageView
     implementation "com.microsoft.device:ink:1.0.0-alpha2"
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
-
     implementation 'com.github.imabhishekkumar:CanvasView:1.0'
     implementation 'com.android.support:multidex:1.0.3'
 
-    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'androidx.databinding:databinding-runtime:7.1.2'
     implementation "androidx.work:work-runtime-ktx:2.7.1"
     implementation 'com.google.firebase:firebase-auth-ktx'
