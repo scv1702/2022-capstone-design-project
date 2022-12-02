@@ -172,6 +172,8 @@ public class Predictor {
 
     private void drawResults(ArrayList<ArrayList<OCRResultModel>> results) {
         StringBuffer outputResultSb = new StringBuffer();
+        outputResultSb.delete(0, outputResultSb.length());
+
         for (ArrayList<OCRResultModel> result: results) {
             for (int i = 0; i < result.size(); i++) {
                 OCRResultModel res = result.get(i);
@@ -189,6 +191,7 @@ public class Predictor {
             return;
         }
         for (Bitmap inputImage: inputImages) {
+            this.inputImages.clear();
             this.inputImages.add(inputImage.copy(Bitmap.Config.ARGB_8888, true));
         }
     }

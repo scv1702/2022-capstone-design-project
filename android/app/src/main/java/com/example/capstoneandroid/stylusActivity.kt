@@ -256,7 +256,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
-            val bitmapList: MutableList<Bitmap> = ArrayList() // crop된 비트맵이 저장된 List
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
                 var bitmap: Bitmap? = null
@@ -271,16 +270,27 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                 }
                 if (bitmap != null) {
                     saveMediaToStorage(bitmap)
+                    val texts1 = TextView(this)
                     val file = bitmapToByteArray(bitmap)
                     val baos = ByteArrayOutputStream()
+                    val bitmapList: ArrayList<Bitmap> = ArrayList() // crop된 비트맵이 저장된 List
                     baos.write(file)
                     val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
                     val body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile)
+
+                    // 필기체 초기화
+                    pathList.clear()
+                    colorList.clear()
+                    path.reset()
+
                     service.getBoxInfo(body).enqueue(object : Callback<CraftResponseDTO.BoxInfo> {
                         override fun onResponse(call: Call<CraftResponseDTO.BoxInfo>, response: Response<CraftResponseDTO.BoxInfo>) {
                             if(response.isSuccessful){
                                 BoxResult = response.body()
                                 Log.d("YMC", "onResponse 성공: " + BoxResult?.bbox.toString());
+
+                                bitmapList.clear()
+
                                 for (i in BoxResult!!.bbox) {
                                     val cropX = i[0][0]
                                     val cropY = i[0][1]
@@ -289,6 +299,32 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                                     val cropBitmap = Bitmap.createBitmap(bitmap, ceil(cropX).toInt() - 10, ceil(cropY).toInt() - 13, ceil(cropWidth).toInt() + 10, ceil(cropHeight).toInt() + 13)
                                     bitmapList.add(cropBitmap)
                                 }
+
+                                predictor.setInputImages(bitmapList)
+                                predictor.runModel(0, 0, 1)
+
+                                // 변환된 텍스트 띄어줌
+                                val Mainlayout = findViewById<MaterialCardView>(R.id.cardView)
+                                val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT
+                                )
+                                layoutParams.gravity = Gravity.CENTER;
+                                layoutParams.setMargins(xValue + 25, yValue + 25, 0, 0)
+                                texts1.setLayoutParams(layoutParams)
+                                texts1.setText(predictor.outputResult)
+                                texts1.setTextColor(Color.BLACK)
+                                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, transTextSize.toFloat())
+                                val typeface = Typeface.createFromAsset(
+                                    assets,
+                                    "asfont/opensanslight.otf"
+                                ) // font 폴더내에 있는 opensanslight.otf 파일을 typeface로 설정
+                                texts1.typeface = typeface // texts1는 TextView 변수
+
+                                Mainlayout.addView(texts1)
+
+                                // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
+                                contentResolver.delete(URII!!, null, null)
                             } else {
                                 Log.d("YMC", "onResponse 실패")
                             }
@@ -297,41 +333,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                             Log.d("YMC", "onFailure 에러: " + t.message.toString());
                         }
                     })
-                    predictor.setInputImages(bitmapList as java.util.ArrayList<Bitmap>?)
-                    predictor.runModel(0, 0, 1)
                 }
-
-                Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT)
-                    .show()
-
-                // 필기체 초기화
-                pathList.clear()
-                colorList.clear()
-                path.reset()
-
-                // 변환된 텍스트 띄어줌
-                val Mainlayout = findViewById<MaterialCardView>(R.id.cardView)
-                val texts1 = TextView(this)
-                val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                layoutParams.gravity = Gravity.CENTER;
-                layoutParams.setMargins(xValue + 25, yValue + 25, 0, 0)
-                texts1.setLayoutParams(layoutParams)
-                texts1.setText(predictor.outputResult)
-                texts1.setTextColor(Color.BLACK)
-                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, transTextSize.toFloat())
-                val typeface = Typeface.createFromAsset(
-                    assets,
-                    "asfont/opensanslight.otf"
-                ) // font 폴더내에 있는 opensanslight.otf 파일을 typeface로 설정
-                texts1.typeface = typeface // texts1는 TextView 변수
-
-                Mainlayout.addView(texts1)
-
-                // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
-                contentResolver.delete(URII!!, null, null)
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
