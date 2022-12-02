@@ -7,6 +7,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
@@ -25,7 +27,7 @@ public class Predictor {
     protected Vector<String> wordLabels = new Vector<String>();
     protected int detLongSize = 960;
     protected float scoreThreshold = 0.1f;
-    protected Bitmap inputImage = null;
+    protected ArrayList<Bitmap> inputImages = new ArrayList<>();
     protected volatile String outputResult = "";
 
     public Predictor() {
@@ -39,7 +41,6 @@ public class Predictor {
         isLoaded = loadLabel(appCtx, labelPath);
         return isLoaded;
     }
-
 
     public boolean init(Context appCtx, String modelPath, String labelPath, int useOpencl, int cpuThreadNum, String cpuPowerMode,
                         int detLongSize, float scoreThreshold) {
@@ -55,7 +56,6 @@ public class Predictor {
     protected boolean loadModel(Context appCtx, String modelPath, int useOpencl, int cpuThreadNum, String cpuPowerMode) {
         // Release model if exists
         releaseModel();
-
         // Load model
         if (modelPath.isEmpty()) {
             return false;
@@ -70,7 +70,6 @@ public class Predictor {
         if (realPath.isEmpty()) {
             return false;
         }
-
         OCRPredictorNative.Config config = new OCRPredictorNative.Config();
         config.useOpencl = useOpencl;
         config.cpuThreadNum = cpuThreadNum;
@@ -80,7 +79,6 @@ public class Predictor {
         config.clsModelFilename = realPath + File.separator + "cls.nb";
         Log.i("Predictor", "model path" + config.detModelFilename + " ; " + config.recModelFilename + ";" + config.clsModelFilename);
         paddlePredictor = new OCRPredictorNative(config);
-
         this.cpuThreadNum = cpuThreadNum;
         this.cpuPowerMode = cpuPowerMode;
         this.modelPath = realPath;
@@ -126,25 +124,27 @@ public class Predictor {
 
 
     public boolean runModel(int run_det, int run_cls, int run_rec) {
-        if (inputImage == null || !isLoaded()) {
+        if (inputImages.size() <= 0 || !isLoaded()) {
             return false;
         }
-
         // Warm up
-        for (int i = 0; i < warmupIterNum; i++) {
-            paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
+        for (Bitmap inputImage: inputImages) {
+            for (int i = 0; i < warmupIterNum; i++) {
+                paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
+            }
         }
         warmupIterNum = 0; // do not need warm
         // Run inference
         Date start = new Date();
-        ArrayList<OCRResultModel> results = paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
+        ArrayList<ArrayList<OCRResultModel>> results = new ArrayList<>();
+        for (Bitmap inputImage: inputImages) {
+            ArrayList<OCRResultModel> result = paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
+            result = postProcess(result);
+            results.add(result);
+        }
         Date end = new Date();
         inferenceTime = (end.getTime() - start.getTime()) / (float) inferIterNum;
-
-        results = postProcess(results);
-        Log.i(TAG, "[stat] Inference Time: " + inferenceTime + " ;Box Size " + results.size());
         drawResults(results);
-
         return true;
     }
 
@@ -152,19 +152,10 @@ public class Predictor {
         return paddlePredictor != null && isLoaded;
     }
 
-    public Bitmap inputImage() {
-        return inputImage;
-    }
-
-    public void setInputImage(Bitmap image) {
-        if (image == null) {
-            return;
-        }
-        this.inputImage = image.copy(Bitmap.Config.ARGB_8888, true);
-    }
 
     private ArrayList<OCRResultModel> postProcess(ArrayList<OCRResultModel> results) {
-        for (OCRResultModel r : results) {
+        Collections.sort(results);
+        for (OCRResultModel r: results) {
             StringBuffer word = new StringBuffer();
             for (int index : r.getWordIndex()) {
                 if (index >= 0 && index < wordLabels.size()) {
@@ -180,14 +171,25 @@ public class Predictor {
         return results;
     }
 
-    private void drawResults(ArrayList<OCRResultModel> results) {
+    private void drawResults(ArrayList<ArrayList<OCRResultModel>> results) {
         StringBuffer outputResultSb = new StringBuffer();
-        for (int i = 0; i < results.size(); i++) {
-            OCRResultModel result = results.get(i);
-            if(result.getLabel().length() > 0){
-                outputResultSb.append(result.getLabel()).append(" ");
+        for (ArrayList<OCRResultModel> result: results) {
+            for (int i = 0; i < result.size(); i++) {
+                OCRResultModel res = result.get(i);
+                if (res.getLabel().length() > 0){
+                    outputResultSb.append(res.getLabel()).append(" ");
+                }
             }
         }
         outputResult = outputResultSb.toString();
+    }
+
+    public void setInputImages(ArrayList<Bitmap> inputImages) {
+        if (inputImages == null || inputImages.size() <= 0) {
+            return;
+        }
+        for (Bitmap inputImage: inputImages) {
+            this.inputImages.add(inputImage.copy(Bitmap.Config.ARGB_8888, true));
+        }
     }
 }

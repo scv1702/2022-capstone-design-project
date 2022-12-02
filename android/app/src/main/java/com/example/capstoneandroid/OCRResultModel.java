@@ -5,7 +5,7 @@ import android.graphics.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OCRResultModel {
+public class OCRResultModel implements Comparable<OCRResultModel>{
     private List<Point> points;
     private List<Integer> wordIndex;
     private String label;
@@ -75,5 +75,10 @@ public class OCRResultModel {
 
     public void setClsConfidence(float confidence) {
         this.cls_confidence = confidence;
+    }
+
+    @Override
+    public int compareTo(OCRResultModel result) {
+        return this.getPoints().get(0).x - result.getPoints().get(0).x;
     }
 }

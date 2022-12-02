@@ -274,7 +274,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                     val file = bitmapToByteArray(bitmap)
                     val baos = ByteArrayOutputStream()
                     baos.write(file)
-
                     val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
                     val body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile)
                     service.getBoxInfo(body).enqueue(object : Callback<CraftResponseDTO.BoxInfo> {
@@ -282,30 +281,24 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                             if(response.isSuccessful){
                                 BoxResult = response.body()
                                 Log.d("YMC", "onResponse 성공: " + BoxResult?.bbox.toString());
-
                                 for (i in BoxResult!!.bbox) {
                                     val cropX = i[0][0]
                                     val cropY = i[0][1]
                                     val cropWidth = i[1][0] - cropX
                                     val cropHeight = i[3][1] - cropY
-
                                     val cropBitmap = Bitmap.createBitmap(bitmap, ceil(cropX).toInt() - 10, ceil(cropY).toInt() - 13, ceil(cropWidth).toInt() + 10, ceil(cropHeight).toInt() + 13)
-
                                     bitmapList.add(cropBitmap)
                                 }
-
-                            } else{
+                            } else {
                                 Log.d("YMC", "onResponse 실패")
                             }
                         }
-
                         override fun onFailure(call: Call<CraftResponseDTO.BoxInfo>, t: Throwable) {
                             Log.d("YMC", "onFailure 에러: " + t.message.toString());
                         }
                     })
-
-                    predictor.setInputImage(bitmap)
-                    predictor.runModel(1, 0, 1)
+                    predictor.setInputImages(bitmapList as java.util.ArrayList<Bitmap>?)
+                    predictor.runModel(0, 0, 1)
                 }
 
                 Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT)
