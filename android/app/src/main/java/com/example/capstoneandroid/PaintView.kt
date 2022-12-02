@@ -47,7 +47,9 @@ class PaintView : View{
 
         params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
+
     var preCheckWait : Boolean = false
+
     override fun onTouchEvent(event: MotionEvent) :Boolean{
         var x = event.x
         var y = event.y
@@ -56,20 +58,25 @@ class PaintView : View{
         if(pointer_count > 2) pointer_count = 2 //3개 이상의 포인트를 터치했더라도 2개까지만 처리를 한다.
         if(pointer_count == 2) {
             preCheckWait = true
-        }
-        if(pointer_count==1 && preCheckWait) { // zoom in, zoom out 후에 바로 선이 그어지지 않도록 체크포인트 구성.
+        }/*
+        if(pointer_count==1 && preCheckWait) {
             preCheckWait= false
             return false
-        }
+        }*/
         when(event.action and MotionEvent.ACTION_MASK){
             MotionEvent.ACTION_DOWN -> {
-                if(pointer_count == 1) {  //한 개 포인트에 대한 DOWN을 얻을 때,
+                if(pointer_count == 1 && !preCheckWait) {  //한 개 포인트에 대한 DOWN을 얻을 때,
                     path.moveTo(x,y)
                     return true
                 }
             }
+            MotionEvent.ACTION_UP -> { // zoom in, zoom out 후에 바로 선이 그어지지 않도록 체크포인트 구성.
+                if(pointer_count==1 && preCheckWait) {
+                    preCheckWait= false
+                }
+            }
             MotionEvent.ACTION_MOVE -> {
-                if(pointer_count == 1) {  //한 개 포인트에 대한 DOWN을 얻을 때,
+                if(pointer_count == 1 && !preCheckWait) {  //한 개 포인트에 대한 DOWN을 얻을 때,
                     path.lineTo(x, y)
                     pathList.add(path)
                     colorList.add(currentBrush)
