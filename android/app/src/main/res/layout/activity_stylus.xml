@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="41dp"
-        android:background="@color/white"></androidx.appcompat.widget.Toolbar>
+        android:background="@color/white" />
 
     <com.google.android.material.card.MaterialCardView
         android:theme="@style/Theme.MaterialComponents.Light"
@@ -41,7 +42,6 @@
             >
         </com.example.capstoneandroid.PaintView>
     </com.google.android.material.card.MaterialCardView>
-
 
     <Button
         android:id="@+id/SCbutton"
