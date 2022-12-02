@@ -122,7 +122,6 @@ public class Predictor {
         return true;
     }
 
-
     public boolean runModel(int run_det, int run_cls, int run_rec) {
         if (inputImages.size() <= 0 || !isLoaded()) {
             return false;
@@ -177,7 +176,7 @@ public class Predictor {
             for (int i = 0; i < result.size(); i++) {
                 OCRResultModel res = result.get(i);
                 if (res.getLabel().length() > 0){
-                    outputResultSb.append(res.getLabel()).append(" ");
+                    outputResultSb.append(res.getLabel());
                 }
             }
         }
@@ -186,6 +185,7 @@ public class Predictor {
 
     public void setInputImages(ArrayList<Bitmap> inputImages) {
         if (inputImages == null || inputImages.size() <= 0) {
+            Log.e(TAG, "setInputImages error");
             return;
         }
         for (Bitmap inputImage: inputImages) {
