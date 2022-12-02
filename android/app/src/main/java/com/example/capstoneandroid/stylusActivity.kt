@@ -20,6 +20,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.capstoneandroid.DTO.CraftResponseDTO
 import com.example.capstoneandroid.PaintView.Companion.colorList
 import com.example.capstoneandroid.PaintView.Companion.currentBrush
 import com.example.capstoneandroid.PaintView.Companion.pathList
@@ -29,11 +30,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.theartofdev.edmodo.cropper.CropImage
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.lang.reflect.Field
+import kotlin.math.ceil
 
 
 @Suppress("DEPRECATION")
@@ -64,6 +74,11 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private val storage = Firebase.storage
 
     private var predictor: Predictor = Predictor()
+
+    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:5000")
+        .addConverterFactory(GsonConverterFactory.create()).build();
+    val service: RetrofitService = retrofit.create(RetrofitService::class.java);
+    var BoxResult: CraftResponseDTO.BoxInfo? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -241,6 +256,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
+            val bitmapList: MutableList<Bitmap> = ArrayList() // crop된 비트맵이 저장된 List
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
                 var bitmap: Bitmap? = null
@@ -255,6 +271,39 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                 }
                 if (bitmap != null) {
                     saveMediaToStorage(bitmap)
+                    val file = bitmapToByteArray(bitmap)
+                    val baos = ByteArrayOutputStream()
+                    baos.write(file)
+
+                    val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                    val body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile)
+                    service.getBoxInfo(body).enqueue(object : Callback<CraftResponseDTO.BoxInfo> {
+                        override fun onResponse(call: Call<CraftResponseDTO.BoxInfo>, response: Response<CraftResponseDTO.BoxInfo>) {
+                            if(response.isSuccessful){
+                                BoxResult = response.body()
+                                Log.d("YMC", "onResponse 성공: " + BoxResult?.bbox.toString());
+
+                                for (i in BoxResult!!.bbox) {
+                                    val cropX = i[0][0]
+                                    val cropY = i[0][1]
+                                    val cropWidth = i[1][0] - cropX
+                                    val cropHeight = i[3][1] - cropY
+
+                                    val cropBitmap = Bitmap.createBitmap(bitmap, ceil(cropX).toInt() - 10, ceil(cropY).toInt() - 13, ceil(cropWidth).toInt() + 10, ceil(cropHeight).toInt() + 13)
+
+                                    bitmapList.add(cropBitmap)
+                                }
+
+                            } else{
+                                Log.d("YMC", "onResponse 실패")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<CraftResponseDTO.BoxInfo>, t: Throwable) {
+                            Log.d("YMC", "onFailure 에러: " + t.message.toString());
+                        }
+                    })
+
                     predictor.setInputImage(bitmap)
                     predictor.runModel(1, 0, 1)
                 }
@@ -304,6 +353,12 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                 binding.ImageUpdate.setImageURI(photoUrl) // ImageView에다가 이미지 GOGO~
             }
         }
+    }
+
+    fun bitmapToByteArray(bitmap: Bitmap): ByteArray? {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        return stream.toByteArray()
     }
 
     fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
