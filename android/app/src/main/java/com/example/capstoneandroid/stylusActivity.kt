@@ -49,6 +49,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private var mScaleGestureDetector: ScaleGestureDetector? = null
     private var scaleFactor = 1.0f
     private lateinit var mImageView: ImageView
+    private lateinit var mpaintView: PaintView
 
     var detector: GestureDetector? = null //무슨 제스쳐를 했는지 감지
     var xValue = 0
@@ -86,6 +87,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         )
 
         mImageView= findViewById(R.id.ImageUpdate)
+        mpaintView= findViewById(R.id.paintVIEW1)
 
         mScaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
 
@@ -227,6 +229,9 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
             // 이미지에 적용
             mImageView.scaleX = scaleFactor
             mImageView.scaleY = scaleFactor
+            mpaintView.scaleX = scaleFactor
+            mpaintView.scaleY = scaleFactor
+
             return true
         }
     }
