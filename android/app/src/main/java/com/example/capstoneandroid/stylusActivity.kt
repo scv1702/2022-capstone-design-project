@@ -75,7 +75,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
     private var predictor: Predictor = Predictor()
 
-    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://192.168.0.20:5000")
+    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:5000")
         .addConverterFactory(GsonConverterFactory.create()).build();
     val service: RetrofitService = retrofit.create(RetrofitService::class.java);
     var BoxResult: CraftResponseDTO.BoxInfo? = null
