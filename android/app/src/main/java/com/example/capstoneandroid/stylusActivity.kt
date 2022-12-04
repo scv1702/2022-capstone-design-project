@@ -74,7 +74,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
     private var predictor: Predictor = Predictor()
 
-    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:5000")
+    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://192.168.0.16:5000")
         .addConverterFactory(GsonConverterFactory.create()).build();
     val service: RetrofitService = retrofit.create(RetrofitService::class.java);
     var BoxResult: CraftResponseDTO.BoxInfo? = null
@@ -336,34 +336,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
                 Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT)
                     .show()
-
-                // 필기체 초기화
-                pathList.clear()
-                colorList.clear()
-                path.reset()
-
-                // 변환된 텍스트 띄어줌
-                val texts1 = TextView(this)
-                val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                layoutParams.gravity = Gravity.CENTER;
-                layoutParams.setMargins(xValue + 25, yValue + 25, 0, 0)
-                texts1.setLayoutParams(layoutParams)
-                texts1.setText(predictor.outputResult)
-                texts1.setTextColor(Color.BLACK)
-                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, transTextSize.toFloat())
-                val typeface = Typeface.createFromAsset(
-                    assets,
-                    "asfont/opensanslight.otf"
-                ) // font 폴더내에 있는 opensanslight.otf 파일을 typeface로 설정
-                texts1.typeface = typeface // texts1는 TextView 변수
-                Mainlayout.addView(texts1)
-
-                // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
-                contentResolver.delete(URII!!, null, null)
-
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
