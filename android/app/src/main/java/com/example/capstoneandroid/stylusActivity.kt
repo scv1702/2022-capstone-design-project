@@ -75,7 +75,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
     private var predictor: Predictor = Predictor()
 
-    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:5000")
+    val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://192.168.0.20:5000")
         .addConverterFactory(GsonConverterFactory.create()).build();
     val service: RetrofitService = retrofit.create(RetrofitService::class.java);
     var BoxResult: CraftResponseDTO.BoxInfo? = null
@@ -291,13 +291,16 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
                                 bitmapList.clear()
 
-                                for (i in BoxResult!!.bbox) {
+                                val bounded = BoxResult!!.bbox.sortedWith(compareBy { it[0][0] })
+
+                                for (i in bounded) {
                                     val cropX = i[0][0]
                                     val cropY = i[0][1]
                                     val cropWidth = i[1][0] - cropX
                                     val cropHeight = i[3][1] - cropY
                                     val cropBitmap = Bitmap.createBitmap(bitmap, ceil(cropX).toInt() - 10, ceil(cropY).toInt() - 13, ceil(cropWidth).toInt() + 10, ceil(cropHeight).toInt() + 13)
                                     bitmapList.add(cropBitmap)
+                                    Log.i("cropX", cropX.toString())
                                 }
 
                                 predictor.setInputImages(bitmapList)

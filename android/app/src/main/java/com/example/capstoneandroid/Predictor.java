@@ -122,6 +122,7 @@ public class Predictor {
         return true;
     }
 
+
     public boolean runModel(int run_det, int run_cls, int run_rec) {
         if (inputImages.size() <= 0 || !isLoaded()) {
             return false;
@@ -178,7 +179,8 @@ public class Predictor {
             for (int i = 0; i < result.size(); i++) {
                 OCRResultModel res = result.get(i);
                 if (res.getLabel().length() > 0){
-                    outputResultSb.append(res.getLabel());
+                    Log.i("label", res.getLabel());
+                    outputResultSb.append(res.getLabel()).append(" ");
                 }
             }
         }
@@ -190,8 +192,8 @@ public class Predictor {
             Log.e(TAG, "setInputImages error");
             return;
         }
+        this.inputImages.clear();
         for (Bitmap inputImage: inputImages) {
-            this.inputImages.clear();
             this.inputImages.add(inputImage.copy(Bitmap.Config.ARGB_8888, true));
         }
     }

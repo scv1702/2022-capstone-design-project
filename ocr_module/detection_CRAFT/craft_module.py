@@ -223,6 +223,7 @@ def text_detection():
 
         image = imgproc.loadImage(file)
         detection = predict_image(image, model)
+        print(detection)
         return jsonify({'bbox': detection.tolist()})
         
 """@app.route('/predict', methods=['POST'])
