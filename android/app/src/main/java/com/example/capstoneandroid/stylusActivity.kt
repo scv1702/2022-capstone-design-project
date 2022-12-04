@@ -331,8 +331,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                     })
                 }
 
-<<<<<<< Updated upstream
-=======
                 Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT)
                     .show()
 
@@ -363,7 +361,6 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                 // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
                 contentResolver.delete(URII!!, null, null)
 
->>>>>>> Stashed changes
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
