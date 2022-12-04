@@ -58,8 +58,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     // 제스처 이벤트 감지하는 변수
     private var mScaleGestureDetector: ScaleGestureDetector? = null
     private var scaleFactor = 1.0f
-    private lateinit var mImageView: ImageView
-    private lateinit var mpaintView: PaintView
+    private lateinit var Mainlayout: MaterialCardView
 
     var detector: GestureDetector? = null //무슨 제스쳐를 했는지 감지
     var xValue = 0
@@ -101,8 +100,7 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
             0.1F
         )
 
-        mImageView= findViewById(R.id.ImageUpdate)
-        mpaintView= findViewById(R.id.paintVIEW1)
+        Mainlayout = findViewById(R.id.cardView)
 
         mScaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
 
@@ -238,14 +236,12 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
             scaleFactor *= scaleGestureDetector.scaleFactor
 
-            // 최소 0.5, 최대 2배
-            scaleFactor = Math.max(0.5f, Math.min(scaleFactor, 2.0f))
+            // 최소 1, 최대 6배
+            scaleFactor = Math.max(1f, Math.min(scaleFactor, 6f))
 
             // 이미지에 적용
-            mImageView.scaleX = scaleFactor
-            mImageView.scaleY = scaleFactor
-            mpaintView.scaleX = scaleFactor
-            mpaintView.scaleY = scaleFactor
+            Mainlayout.scaleX = scaleFactor
+            Mainlayout.scaleY = scaleFactor
 
             return true
         }
@@ -337,6 +333,36 @@ class stylusActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                         }
                     })
                 }
+
+                Toast.makeText(this, "Captured View and saved to Gallery", Toast.LENGTH_SHORT)
+                    .show()
+
+                // 필기체 초기화
+                pathList.clear()
+                colorList.clear()
+                path.reset()
+
+                // 변환된 텍스트 띄어줌
+                val texts1 = TextView(this)
+                val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                layoutParams.gravity = Gravity.CENTER;
+                layoutParams.setMargins(xValue + 25, yValue + 25, 0, 0)
+                texts1.setLayoutParams(layoutParams)
+                texts1.setText(predictor.outputResult)
+                texts1.setTextColor(Color.BLACK)
+                texts1.setTextSize(TypedValue.COMPLEX_UNIT_SP, transTextSize.toFloat())
+                val typeface = Typeface.createFromAsset(
+                    assets,
+                    "asfont/opensanslight.otf"
+                ) // font 폴더내에 있는 opensanslight.otf 파일을 typeface로 설정
+                texts1.typeface = typeface // texts1는 TextView 변수
+                Mainlayout.addView(texts1)
+
+                // URI을 얻기위해 임시로 만든 image를 mediastore에서 삭제시킴.
+                contentResolver.delete(URII!!, null, null)
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
