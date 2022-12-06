@@ -1,6 +1,6 @@
 # 라이센스
 
-본 프로젝트는 아래의 오픈 소스를 사용했음을 다음과 같이 명시합니다.
+본 프로젝트는 아래의 오픈 소스들을 사용했음을 다음과 같이 명시합니다.
 
 ### clovaai/CRAFT-pytorch
 https://github.com/clovaai/CRAFT-pytorch
