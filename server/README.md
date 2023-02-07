@@ -1,6 +1,7 @@
 # Server
 
 ## How to run the server
+- Python: 3.10 
 
 1. `server` 디렉토리로 이동
 
